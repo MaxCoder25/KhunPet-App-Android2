@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "612098976836",
+    "project_id": "khunpet-495ce",
+    "storage_bucket": "khunpet-495ce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612098976836:android:2441998e275049cee36011",
+        "android_client_info": {
+          "package_name": "com.example.khunpet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "612098976836-qsili7f6vt97i2quvoqv5h8qfr87rtkd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCf-wwe8xtJABymO1FYLjQEvkrYpIA5Knw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "612098976836-qsili7f6vt97i2quvoqv5h8qfr87rtkd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
