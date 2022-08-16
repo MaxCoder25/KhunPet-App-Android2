@@ -10,4 +10,9 @@
         android:enabled="true"
         android:icon="@drawable/icon_find"
         android:title="Buscar Mascota"/>
+    <item
+        android:id="@+id/publications_button"
+        android:enabled="true"
+        android:icon="@drawable/list_icon"
+        android:title="Publicaciones"/>
 </menu>

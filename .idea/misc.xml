@@ -5,7 +5,10 @@
       <map>
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpet/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpet/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpet/app/src/main/res/layout/fragment_insert_publication.xml" value="0.2" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpet/app/src/main/res/layout/fragment_lost_and_found.xml" value="0.264" />
+        <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpet/app/src/main/res/layout/fragment_publications.xml" value="0.1484375" />
+        <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpet/app/src/main/res/layout/item_publication_list.xml" value="0.4" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpet/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.25416666666666665" />
       </map>
     </option>

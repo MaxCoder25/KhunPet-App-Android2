@@ -1,6 +1,7 @@
 package com.example.khunpet.utils
 
 import android.app.Application
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
@@ -11,6 +12,7 @@ class AppDatabase : Application() {
 
         private lateinit var storage: FirebaseStorage
 
+
         fun getStorageReference() : FirebaseStorage {
             return storage
         }
@@ -20,7 +22,6 @@ class AppDatabase : Application() {
     override fun onCreate() {
         super.onCreate()
         storage = FirebaseStorage.getInstance()
-
     }
 
 }

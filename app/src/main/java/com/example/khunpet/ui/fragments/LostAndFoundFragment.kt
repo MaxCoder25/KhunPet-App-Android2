@@ -3,6 +3,7 @@ package com.example.khunpet.ui.fragments
 import android.app.Activity.RESULT_OK
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -14,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -26,21 +28,14 @@ import com.squareup.picasso.Picasso
 import java.io.ByteArrayOutputStream
 import java.io.FileDescriptor
 
+
 class LostAndFoundFragment : Fragment() {
 
     private val viewModel: LostAndFoundViewModel by viewModels()
     private var _binding: FragmentLostAndFoundBinding? = null
     private val binding get() = _binding!!
 
-    private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == RESULT_OK) {
-            val uri = it.data?.data!!
-            var bitmap = uriToBitmap(uri, requireContext())
-            var newBitmap = resizePhoto(bitmap)
-            var newUri = bitmapToUri(newBitmap, requireContext())
-            viewModel.imageUri.postValue(newUri)
-        }
-    }
+    private lateinit var pickImg: ActivityResultLauncher<Intent>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,6 +43,15 @@ class LostAndFoundFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentLostAndFoundBinding.inflate(inflater, container, false)
+        pickImg = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                val uri = it.data?.data!!
+                val bitmap = uriToBitmap(uri, requireContext())
+                val newBitmap = resizePhoto(bitmap)
+                val newUri = bitmapToUri(newBitmap, requireContext())
+                viewModel.imageUri.postValue(newUri)
+            }
+        }
         return binding.root
     }
 
@@ -60,7 +64,7 @@ class LostAndFoundFragment : Fragment() {
             ImagePicker.with(requireActivity())
                 .provider(ImageProvider.BOTH)
                 .crop(224f,224f)
-                .createIntentFromDialog { launcher.launch(it) }
+                .createIntentFromDialog { pickImg.launch(it) }
         }
 
         binding.requestButton.setOnClickListener {

@@ -5,12 +5,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.khunpet.R
 import com.example.khunpet.ui.fragments.HomeFragment
+import com.example.khunpet.ui.fragments.InsertPublicationFragment
 import com.example.khunpet.ui.fragments.LostAndFoundFragment
+import com.example.khunpet.ui.fragments.PublicationsFragment
 
 class MainActivityViewModel: ViewModel() {
 
     private val lostFoundFragment = LostAndFoundFragment()
     private val homeFragment = HomeFragment()
+    private val publicationsFragment = PublicationsFragment()
+    private val insertPublicationsFragment = InsertPublicationFragment()
 
     val currentFragment : MutableLiveData<Fragment> by lazy {
         MutableLiveData<Fragment>()
@@ -27,12 +31,20 @@ class MainActivityViewModel: ViewModel() {
     fun changeFragment(index:Int) : Boolean {
         changeTab(index)
         return when(index) {
+            5 -> {
+                currentFragment.postValue(insertPublicationsFragment)
+                true
+            }
             R.id.home_button -> {
                 currentFragment.postValue(homeFragment)
                 true
             }
             R.id.lost_found_button -> {
                 currentFragment.postValue(lostFoundFragment)
+                true
+            }
+            R.id.publications_button -> {
+                currentFragment.postValue(publicationsFragment)
                 true
             }
             else -> false

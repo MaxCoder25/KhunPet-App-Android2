@@ -23,6 +23,7 @@ class LostAndFoundViewModel : ViewModel() {
     private val client = OkHttpClient()
 
 
+
     val imageUri : MutableLiveData<Uri> by lazy {
         MutableLiveData<Uri>()
     }
@@ -50,7 +51,6 @@ class LostAndFoundViewModel : ViewModel() {
 
         storageReference.getReference("temp/$fileName.jpg").putFile(imageUri.value!!)
             .addOnSuccessListener {
-                imageUri.postValue(Uri.EMPTY)
                 makeRequest(fileName)
             }
             .addOnFailureListener {
@@ -62,18 +62,17 @@ class LostAndFoundViewModel : ViewModel() {
     }
 
     private fun makeRequest(fileName: String) {
-        var type = "custom";
-        when(model.value) {
+        val type = when(model.value) {
             1 -> {
-               type = "custom"
+                "custom"
             }
             2 -> {
-                type = "vgg16"
+                "vgg16"
             }
             3 -> {
-                type = "deepimagesearch"
+                "deepimagesearch"
             }
-            else -> type = "custom"
+            else -> "custom"
         }
 
         val request = Request.Builder()
@@ -101,8 +100,6 @@ class LostAndFoundViewModel : ViewModel() {
                     } else {
                         listaDeepImageSearch = gson.fromJson(response.body!!.string(), DeepImageSearchResponse::class.java)
                     }
-
-
                     Log.d("Response",lista.toString())
                     Log.d("Response",listaDeepImageSearch.toString())
                     loading.postValue(false)

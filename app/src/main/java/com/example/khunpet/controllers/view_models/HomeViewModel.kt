@@ -1,4 +1,4 @@
-package com.example.khunpet.ui.fragments
+package com.example.khunpet.controllers.view_models
 
 import androidx.lifecycle.ViewModel
 
