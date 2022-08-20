@@ -21,11 +21,18 @@
         android:theme="@style/Theme.Khunpet"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activities.MainActivity"
+            android:name=".ui.activities.DataUserActivity"/>
+        <activity
+            android:name=".ui.activities.CheckEmailActivity"/>
+        <activity
+            android:name=".ui.activities.RegistroActivity"/>
+        <activity
+            android:name=".ui.activities.MainActivity"/>
+        <activity
+            android:name=".ui.activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
