@@ -96,15 +96,7 @@ class InsertPublicationFragment : Fragment() {
         val telefono = binding.telefonoEditText.text.toString()
         val descripcion = binding.comentarioEditText.text.toString()
 
-        val tipo = when(binding.tipoMascotaRadioGroup.checkedRadioButtonId) {
-            R.id.perroRadioButton -> {
-                "perro"
-            }
-            R.id.gatoRadioButton -> {
-                "gato"
-            }
-            else -> "perro"
-        }
+        val tipo = "Perdido y Encontrado"
 
         val condicion = when(binding.condicionRadioGroup.checkedRadioButtonId) {
             R.id.saludableRadioButton -> {

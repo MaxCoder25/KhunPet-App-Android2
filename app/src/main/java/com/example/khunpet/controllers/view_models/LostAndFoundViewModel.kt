@@ -6,11 +6,15 @@ import android.provider.MediaStore.Video
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.khunpet.caso_uso.PublicationFetch
 import com.example.khunpet.model.DeepImageSearchResponse
 import com.example.khunpet.model.FlaskResponse
+import com.example.khunpet.model.Publication
 import com.example.khunpet.utils.AppDatabase
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.launch
 import okhttp3.*
 import java.io.IOException
 import java.lang.Exception
@@ -22,7 +26,11 @@ class LostAndFoundViewModel : ViewModel() {
 
     private val client = OkHttpClient()
 
+    var retLiveData = MutableLiveData<List<Publication>>()
 
+    var isLoading = MutableLiveData<Boolean>().apply {
+        value = false
+    }
 
     val imageUri : MutableLiveData<Uri> by lazy {
         MutableLiveData<Uri>()
@@ -97,8 +105,14 @@ class LostAndFoundViewModel : ViewModel() {
                     var listaDeepImageSearch = DeepImageSearchResponse()
                     if (type != "deepimagesearch") {
                         lista = gson.fromJson(response.body!!.string(), object : TypeToken<MutableList<FlaskResponse?>?>() {}.type)
+                        viewModelScope.launch {
+                            getItems(lista)
+                        }
                     } else {
                         listaDeepImageSearch = gson.fromJson(response.body!!.string(), DeepImageSearchResponse::class.java)
+                        viewModelScope.launch {
+                            getItemsDIS(listaDeepImageSearch)
+                        }
                     }
                     Log.d("Response",lista.toString())
                     Log.d("Response",listaDeepImageSearch.toString())
@@ -106,6 +120,18 @@ class LostAndFoundViewModel : ViewModel() {
                 }
             }
         })
+    }
+
+    suspend fun getItems(lista : MutableList<FlaskResponse>) {
+        val ret = PublicationFetch().fetchSimilarPets(lista)
+        retLiveData.postValue(ret)
+        isLoading.postValue(false)
+    }
+
+    suspend fun getItemsDIS(listaDeepImageSearch : DeepImageSearchResponse) {
+        val ret = PublicationFetch().fetchSimilarPetsDIS(listaDeepImageSearch)
+        retLiveData.postValue(ret)
+        isLoading.postValue(false)
     }
 
 

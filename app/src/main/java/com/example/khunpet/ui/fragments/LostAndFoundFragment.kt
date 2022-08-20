@@ -19,11 +19,17 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.khunpet.R
+import com.example.khunpet.controllers.adapters.PublicationAdapter
 import com.example.khunpet.controllers.view_models.LostAndFoundViewModel
 import com.example.khunpet.databinding.FragmentLostAndFoundBinding
+import com.example.khunpet.model.Publication
+import com.example.khunpet.ui.activities.InfoActivity
 import com.github.drjacky.imagepicker.ImagePicker
 import com.github.drjacky.imagepicker.constant.ImageProvider
+import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import java.io.ByteArrayOutputStream
 import java.io.FileDescriptor
@@ -75,7 +81,7 @@ class LostAndFoundFragment : Fragment() {
             loadWithPicasso(it)
         }
 
-        viewModel.loading.observe(viewLifecycleOwner) { bool ->
+        viewModel.isLoading.observe(viewLifecycleOwner) { bool ->
             if (bool) {
                 binding.progressBar.visibility = View.VISIBLE
             } else {
@@ -101,6 +107,10 @@ class LostAndFoundFragment : Fragment() {
 
         viewModel.model.observe(viewLifecycleOwner) {
             Log.d("Model", it.toString())
+        }
+
+        viewModel.retLiveData.observe(viewLifecycleOwner) {
+            loadRecyclerView(it)
         }
     }
 
@@ -151,7 +161,12 @@ class LostAndFoundFragment : Fragment() {
             Toast.makeText(requireContext(), "Escoge una imagen primero", Toast.LENGTH_SHORT).show()
         }
         if (progressDialog.isShowing) progressDialog.dismiss()
+    }
 
+    private fun loadRecyclerView(items : List<Publication>) {
+        binding.resultRecyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.resultRecyclerView.adapter = PublicationAdapter(items) { onClickPublication(it) }
     }
 
 
@@ -166,6 +181,14 @@ class LostAndFoundFragment : Fragment() {
                 .fit().into(binding.uploadedImageView)
         }
 
+    }
+
+    private fun onClickPublication(publication: Publication) {
+        val intent = Intent(requireActivity(), InfoActivity::class.java)
+        val gson = Gson()
+        val json = gson.toJson(publication)
+        intent.putExtra("publication", json)
+        startActivity(intent);
     }
 
 }

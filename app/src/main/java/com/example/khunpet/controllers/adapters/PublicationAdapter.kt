@@ -6,12 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.khunpet.R
+import com.example.khunpet.controllers.view_models.MainActivityViewModel
 import com.example.khunpet.databinding.ItemPublicationListBinding
 import com.example.khunpet.model.Publication
 import com.example.khunpet.utils.AppDatabase
 import com.squareup.picasso.Picasso
 
-class PublicationAdapter(list: List<Publication>) : RecyclerView.Adapter<PublicationAdapter.PublicationViewHolder>()
+class PublicationAdapter(list: List<Publication>, val onClickItemSelected: (Publication) -> Unit) : RecyclerView.Adapter<PublicationAdapter.PublicationViewHolder>()
 {
     private var publicationList: MutableList<Publication> = list.toMutableList()
 
@@ -34,9 +35,8 @@ class PublicationAdapter(list: List<Publication>) : RecyclerView.Adapter<Publica
         var storage = AppDatabase.getStorageReference()
         fun render(item: Publication, index: Int) {
 
-            binding.fechaPublicacionText.text = item.fecha
-            binding.tipoPublicacionText.text = item.tipo
-
+            val pubText : String = "Publicado: "+item.fecha
+            binding.fechaPublicacionText.text = pubText
 
             storage.getReference("lost").child(item.foto!!).downloadUrl
                 .addOnSuccessListener {
@@ -48,10 +48,12 @@ class PublicationAdapter(list: List<Publication>) : RecyclerView.Adapter<Publica
                 }
 
             binding.itemPublication.setOnClickListener {
-                Log.d("Click", "Me diste click :D")
+                onClickItemSelected(publicationList[index])
             }
 
         }
+
+
     }
 
 }
