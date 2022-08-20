@@ -30,30 +30,36 @@ class PublicationFetch {
     suspend fun fetchSimilarPets(lista : MutableList<FlaskResponse>): MutableList<Publication> = withContext(Dispatchers.Default) {
         database = FirebaseFirestore.getInstance()
         val photos : MutableList<String> = lista.map { p -> p.image }.toMutableList()
-        var ret: MutableList<Publication> = mutableListOf()
+        val ret: MutableList<Publication> = mutableListOf()
         val task = database.collectionGroup("publicacion").get().addOnSuccessListener { resultado->
             for(documento in resultado){
                 val publicacion=documento.toObject(Publication::class.java)
-                ret.add(publicacion)
+                if (photos.contains(publicacion.foto)) {
+                    ret.add(publicacion)
+                }
+
             }
         }
         while (!task.isComplete) { }
-        ret = ret.filter { p -> photos.contains(p.foto)  }.toMutableList()
+        Log.d("fetchSimilarPets",ret.toString())
         ret
     }
 
 
     suspend fun fetchSimilarPetsDIS(listaDeepImageSearch : DeepImageSearchResponse): MutableList<Publication> = withContext(Dispatchers.Default) {
         database = FirebaseFirestore.getInstance()
-        var ret: MutableList<Publication> = mutableListOf()
+        val ret: MutableList<Publication> = mutableListOf()
         val task = database.collectionGroup("publicacion").get().addOnSuccessListener { resultado->
             for(documento in resultado){
                 val publicacion=documento.toObject(Publication::class.java)
-                ret.add(publicacion)
+                if (listaDeepImageSearch.contains(publicacion.foto)) {
+                    ret.add(publicacion)
+                }
             }
+
         }
         while (!task.isComplete) { }
-        ret = ret.filter { p -> listaDeepImageSearch.contains(p.foto)  }.toMutableList()
+        Log.d("fetchSimilarPetsDIS",ret.toString())
         ret
     }
 }

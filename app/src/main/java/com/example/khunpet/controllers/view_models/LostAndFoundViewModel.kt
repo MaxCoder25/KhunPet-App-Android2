@@ -25,12 +25,9 @@ import java.util.*
 class LostAndFoundViewModel : ViewModel() {
 
     private val client = OkHttpClient()
+    val storageReference = AppDatabase.getStorageReference()
 
     var retLiveData = MutableLiveData<List<Publication>>()
-
-    var isLoading = MutableLiveData<Boolean>().apply {
-        value = false
-    }
 
     val imageUri : MutableLiveData<Uri> by lazy {
         MutableLiveData<Uri>()
@@ -51,12 +48,11 @@ class LostAndFoundViewModel : ViewModel() {
     }
 
 
-    fun uploadImageToFirebaseStorage(context: Context) {
+    fun uploadImageToFirebaseStorage() {
         val formatter = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
         val now = Date()
         val fileName = formatter.format(now)
-        val storageReference = AppDatabase.getStorageReference()
-
+        loading.postValue(true)
         storageReference.getReference("temp/$fileName.jpg").putFile(imageUri.value!!)
             .addOnSuccessListener {
                 makeRequest(fileName)
@@ -64,8 +60,6 @@ class LostAndFoundViewModel : ViewModel() {
             .addOnFailureListener {
                 imageUri.postValue(Uri.EMPTY)
             }
-
-        loading.postValue(true)
 
     }
 
@@ -117,6 +111,8 @@ class LostAndFoundViewModel : ViewModel() {
                     Log.d("Response",lista.toString())
                     Log.d("Response",listaDeepImageSearch.toString())
                     loading.postValue(false)
+
+
                 }
             }
         })
@@ -124,14 +120,14 @@ class LostAndFoundViewModel : ViewModel() {
 
     suspend fun getItems(lista : MutableList<FlaskResponse>) {
         val ret = PublicationFetch().fetchSimilarPets(lista)
-        retLiveData.postValue(ret)
-        isLoading.postValue(false)
+        retLiveData.value = ret
+        Log.d("Firebasefetch",ret.toString())
     }
 
     suspend fun getItemsDIS(listaDeepImageSearch : DeepImageSearchResponse) {
         val ret = PublicationFetch().fetchSimilarPetsDIS(listaDeepImageSearch)
-        retLiveData.postValue(ret)
-        isLoading.postValue(false)
+        retLiveData.value = ret
+        Log.d("Firebasefetch",ret.toString())
     }
 
 
