@@ -3,14 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.khunpet">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:permissionGroup="android.permission-group.STORAGE"
         android:protectionLevel="dangerous" />
-
+    <queries>
+        <package android:name="com.whatsapp" />
+    </queries>
     <application
         android:name=".utils.AppDatabase"
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -19,20 +22,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Khunpet"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activities.DataUserActivity"/>
+            android:name=".ui.activities.InfoActivity"
+            android:exported="false" />
         <activity
-            android:name=".ui.activities.CheckEmailActivity"/>
-        <activity
-            android:name=".ui.activities.RegistroActivity"/>
-        <activity
-            android:name=".ui.activities.MainActivity"/>
-        <activity
-            android:name=".ui.activities.LoginActivity"
+            android:name=".ui.activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

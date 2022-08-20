@@ -17,15 +17,29 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toFile
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.khunpet.R
+import com.example.khunpet.controllers.adapters.PublicationAdapter
 import com.example.khunpet.controllers.view_models.LostAndFoundViewModel
 import com.example.khunpet.databinding.FragmentLostAndFoundBinding
+import com.example.khunpet.model.Publication
+import com.example.khunpet.ui.activities.InfoActivity
 import com.github.drjacky.imagepicker.ImagePicker
 import com.github.drjacky.imagepicker.constant.ImageProvider
+import com.google.gson.Gson
 import com.squareup.picasso.Picasso
+import id.zelory.compressor.Compressor
+import id.zelory.compressor.constraint.default
+import id.zelory.compressor.constraint.resolution
+import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.io.FileDescriptor
 
 
@@ -46,10 +60,14 @@ class LostAndFoundFragment : Fragment() {
         pickImg = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == RESULT_OK) {
                 val uri = it.data?.data!!
-                val bitmap = uriToBitmap(uri, requireContext())
-                val newBitmap = resizePhoto(bitmap)
-                val newUri = bitmapToUri(newBitmap, requireContext())
-                viewModel.imageUri.postValue(newUri)
+                lifecycleScope.launch {
+                    val compressedImageFile = Compressor.compress(requireContext(), uri.toFile()) {
+                        resolution(600,600)
+                        default()
+                    }
+                    viewModel.imageUri.postValue(compressedImageFile.toUri())
+                }
+
             }
         }
         return binding.root
@@ -99,9 +117,16 @@ class LostAndFoundFragment : Fragment() {
             uncheckCheckboxes(binding.customCheck.isChecked, binding.vggCheck.isChecked, binding.disCheck.isChecked)
         }
 
-        viewModel.model.observe(viewLifecycleOwner) {
-            Log.d("Model", it.toString())
+
+        viewModel.retLiveData.observe(viewLifecycleOwner) {
+            if (it.isEmpty()) binding.noResultsTextView.visibility = View.VISIBLE
+            else
+            {
+                binding.noResultsTextView.visibility = View.GONE
+                loadRecyclerView(it)
+            }
         }
+
     }
 
     private fun uncheckCheckboxes(custom : Boolean, vgg : Boolean, deep : Boolean) {
@@ -116,42 +141,23 @@ class LostAndFoundFragment : Fragment() {
         }
     }
 
-    fun resizePhoto(bitmap: Bitmap): Bitmap {
-        val w = 224
-        val h = 224
-        return Bitmap.createScaledBitmap(bitmap, w, h, false)
-    }
-
-    fun uriToBitmap(uri: Uri, context: Context): Bitmap {
-        val parcelFileDescriptor: ParcelFileDescriptor? = context.contentResolver
-            .openFileDescriptor(uri, "r")
-        val fileDescriptor: FileDescriptor = parcelFileDescriptor?.fileDescriptor!!
-        val image = BitmapFactory.decodeFileDescriptor(fileDescriptor)
-        parcelFileDescriptor.close()
-        return image
-    }
-
-    private fun bitmapToUri(inImage: Bitmap, inContext: Context): Uri? {
-        val bytes = ByteArrayOutputStream()
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path =
-            MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
-        return Uri.parse(path)
-    }
-
     private fun uploadImage() {
         val progressDialog = ProgressDialog(requireContext())
         progressDialog.setMessage("Cargando imagen...")
         progressDialog.setCancelable(false)
         progressDialog.show()
         if (viewModel.imageUri.value != Uri.EMPTY) {
-            viewModel.uploadImageToFirebaseStorage(requireContext())
-            Toast.makeText(requireContext(), "Imagen subida con exito", Toast.LENGTH_SHORT).show()
+            viewModel.uploadImageToFirebaseStorage()
         } else {
             Toast.makeText(requireContext(), "Escoge una imagen primero", Toast.LENGTH_SHORT).show()
         }
         if (progressDialog.isShowing) progressDialog.dismiss()
+    }
 
+    private fun loadRecyclerView(items : List<Publication>) {
+        binding.resultRecyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.resultRecyclerView.adapter = PublicationAdapter(items) { onClickPublication(it) }
     }
 
 
@@ -167,5 +173,15 @@ class LostAndFoundFragment : Fragment() {
         }
 
     }
+
+    private fun onClickPublication(publication: Publication) {
+        val intent = Intent(requireActivity(), InfoActivity::class.java)
+        val gson = Gson()
+        val json = gson.toJson(publication)
+        intent.putExtra("publication", json)
+        startActivity(intent);
+    }
+
+
 
 }

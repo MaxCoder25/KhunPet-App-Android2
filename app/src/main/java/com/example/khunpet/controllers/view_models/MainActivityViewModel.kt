@@ -1,13 +1,13 @@
 package com.example.khunpet.controllers.view_models
 
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.khunpet.R
-import com.example.khunpet.ui.fragments.HomeFragment
-import com.example.khunpet.ui.fragments.InsertPublicationFragment
-import com.example.khunpet.ui.fragments.LostAndFoundFragment
-import com.example.khunpet.ui.fragments.PublicationsFragment
+import com.example.khunpet.model.Publication
+import com.example.khunpet.ui.fragments.*
+import com.google.gson.Gson
 
 class MainActivityViewModel: ViewModel() {
 
@@ -50,6 +50,7 @@ class MainActivityViewModel: ViewModel() {
             else -> false
         }
     }
+
 
     fun changeTab(index:Int) {
         currentTab.postValue(index)

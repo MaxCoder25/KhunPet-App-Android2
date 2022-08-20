@@ -2,7 +2,6 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
-
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.7.10'
 }
 
@@ -92,4 +91,8 @@ dependencies {
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.13.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
+
+
+    // Compresion de imgs
+    implementation 'id.zelory:compressor:3.0.1'
 }

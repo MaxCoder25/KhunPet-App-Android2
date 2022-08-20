@@ -22,10 +22,9 @@ class PublicationsViewModel : ViewModel() {
         }
     }
 
-    private suspend fun getItems() {
+    suspend fun getItems() {
         isLoading.postValue(true)
         val ret = PublicationFetch().fetchPublication()
-
         retLiveData.postValue(ret)
         isLoading.postValue(false)
     }

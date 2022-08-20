@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpet/app/src/main/res/drawable/border.xml" value="0.147" />
+        <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpet/app/src/main/res/layout/activity_info.xml" value="0.2" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpet/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpet/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpet/app/src/main/res/layout/fragment_info.xml" value="0.264" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpet/app/src/main/res/layout/fragment_insert_publication.xml" value="0.2" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpet/app/src/main/res/layout/fragment_lost_and_found.xml" value="0.264" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpet/app/src/main/res/layout/fragment_publications.xml" value="0.1484375" />
@@ -22,6 +25,8 @@
         <entry key="..\:/Users/danie/Documents/GitHub/Khunpetv2/app/src/main/res/layout/activity_login.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/danie/Documents/GitHub/Khunpetv2/app/src/main/res/layout/activity_principal.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/danie/Documents/GitHub/Khunpetv2/app/src/main/res/layout/activity_registro.xml" value="0.22" />
+        <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpet/app/src/main/res/mipmap-anydpi-v26/wsp_ic.xml" value="0.147" />
+        <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpet/app/src/main/res/mipmap-anydpi-v26/wsp_ic_round.xml" value="0.124" />
       </map>
     </option>
   </component>
