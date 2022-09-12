@@ -1,6 +1,8 @@
 package com.example.khunpet.ui.fragments
 
+import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
@@ -8,79 +10,157 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.khunpet.R
 import com.example.khunpet.controllers.adapters.PublicationAdapter
+import com.example.khunpet.controllers.view_models.InsertPublicationViewModel
 import com.example.khunpet.controllers.view_models.MainActivityViewModel
 import com.example.khunpet.controllers.view_models.PublicationsViewModel
+import com.example.khunpet.databinding.FragmentInsertPublicationBinding
 import com.example.khunpet.databinding.FragmentPublicationsBinding
 import com.example.khunpet.model.Publication
 import com.example.khunpet.ui.activities.InfoActivity
 import com.example.khunpet.ui.activities.MainActivity
+import com.github.drjacky.imagepicker.ImagePicker
+import com.github.drjacky.imagepicker.constant.ImageProvider
 import com.google.gson.Gson
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
+import java.util.regex.Pattern
 
 
 class PublicationsFragment : Fragment() {
 
 
-    private val viewModel: PublicationsViewModel by viewModels()
-    private val activityViewModel : MainActivityViewModel by activityViewModels()
-    private var _binding: FragmentPublicationsBinding? = null
+    private val viewModel : InsertPublicationViewModel by viewModels()
+    private var _binding: FragmentInsertPublicationBinding? = null
     private val binding get() = _binding!!
+
+    private val regex = "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*\$"
+    private var pattern: Pattern = Pattern.compile(regex)
+
+    private lateinit var selectImg: ActivityResultLauncher<Intent>
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentPublicationsBinding.inflate(inflater, container, false)
+        _binding = FragmentInsertPublicationBinding.inflate(inflater, container, false)
+        selectImg = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val uri = it.data?.data!!
+                viewModel.imageUri.postValue(uri)
+            }
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lifecycleScope.launch {
-            viewModel.getItems()
+        binding.imageButton.setOnClickListener {
+            ImagePicker.with(requireActivity())
+                .provider(ImageProvider.BOTH)
+                .crop(224f,224f)
+                .createIntentFromDialog { selectImg.launch(it) }
         }
-
 
         binding.publicarButton.setOnClickListener {
-            activityViewModel.changeFragment(5)
+            buildPublication()
+            clear()
+
         }
 
-        viewModel.isLoading.observe(viewLifecycleOwner) { bool ->
+        viewModel.imageUri.observe(viewLifecycleOwner) {
+            loadWithPicasso(it)
+        }
+
+        viewModel.loading.observe(viewLifecycleOwner) { bool ->
             if (bool) {
-                binding.publicationProgressBar.visibility = View.VISIBLE
+                binding.loadingPublicacion.visibility = View.VISIBLE
             } else {
-                binding.publicationProgressBar.visibility = View.GONE
+                binding.loadingPublicacion.visibility = View.GONE
             }
         }
 
-        viewModel.retLiveData.observe(viewLifecycleOwner) {
-            loadRecyclerView(it)
+
+
+
+    }
+
+
+    private fun buildPublication() {
+
+        if (viewModel.imageUri.value == Uri.EMPTY) {
+            Toast.makeText(requireContext(), "Es necesario una imagen", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if (!pattern.matcher(binding.telefonoEditText.text.toString()).find()) {
+            Toast.makeText(requireContext(), "Es necesario un telefono de contacto válido", Toast.LENGTH_SHORT).show()
+            return
         }
 
+        val locacion = binding.encontradoEditText.text.toString()
+        val telefono = binding.telefonoEditText.text.toString()
+        val descripcion = binding.comentarioEditText.text.toString()
+
+        val tipo = "Perdido y Encontrado"
+
+        val condicion = when(binding.condicionRadioGroup.checkedRadioButtonId) {
+            R.id.saludableRadioButton -> {
+                "saludable"
+            }
+            R.id.graveRadioButton -> {
+                "grave"
+            }
+            R.id.criticoRadioButton -> {
+                "critico"
+            }
+            else -> "saludable"
+        }
+
+        val publication = Publication(locacion,telefono,descripcion,tipo,condicion)
+
+        //viewModel.publish(publication)
+
+        Toast.makeText(requireContext(), "Publicación exitosa", Toast.LENGTH_SHORT).show()
 
     }
 
-    private fun loadRecyclerView(items : List<Publication>) {
-        binding.publicacionReciclerView.layoutManager =
-            GridLayoutManager(binding.publicacionReciclerView.context, 2)
-        binding.publicacionReciclerView.adapter = PublicationAdapter(items) { onClickPublication(it) }
+    private fun loadWithPicasso(uri: Uri) {
+        if (uri != Uri.EMPTY) {
+            Picasso.get()
+                .load(uri)
+                .fit().into(binding.uploadImageView)
+        } else  {
+            Picasso.get()
+                .load(R.drawable.place_holder)
+                .fit().into(binding.uploadImageView)
+        }
+
     }
 
-    private fun onClickPublication(publication: Publication) {
-        val intent = Intent(requireActivity(),InfoActivity::class.java)
-        val gson = Gson()
-        val json = gson.toJson(publication)
-        intent.putExtra("publication", json)
-        startActivity(intent);
+
+    private fun clear(){
+        binding.uploadImageView.setImageResource(0)
+        removeImage()
+        binding.encontradoEditText.text.clear()
+        binding.telefonoEditText.text.clear()
+        binding.comentarioEditText.text.clear()
+        binding.condicionRadioGroup.clearCheck()
     }
 
-
+    private fun removeImage(){
+        Picasso.get()
+            .load(R.drawable.place_holder)
+            .fit().into(binding.uploadImageView)
+    }
 }

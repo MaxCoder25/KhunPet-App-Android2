@@ -62,7 +62,7 @@ class CheckEmailActivity : AppCompatActivity() {
         user!!.sendEmailVerification()
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "Se ha enviado un correo de verifiación.",
+                    Toast.makeText(this, "Se ha enviado un correo de verificación.",
                         Toast.LENGTH_SHORT).show()
                 }
             }

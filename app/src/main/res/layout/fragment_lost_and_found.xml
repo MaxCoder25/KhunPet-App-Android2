@@ -27,13 +27,16 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/resultRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_width="417dp"
+            android:layout_height="196dp"
+            android:layout_marginTop="110dp"
+            android:layout_marginBottom="80dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+            app:layout_constraintTop_toTopOf="@+id/requestButton"
+            app:layout_constraintVertical_bias="0.0" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/uploadImageButton"
@@ -42,6 +45,7 @@
             android:clickable="true"
             android:focusable="true"
             android:scaleType="fitXY"
+            android:background="#5297bd"
             android:src="@drawable/photo_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -56,7 +60,7 @@
             android:layout_width="293dp"
             android:layout_height="219dp"
             android:layout_marginStart="100dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="65dp"
             android:layout_marginEnd="100dp"
             app:cardCornerRadius="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -74,56 +78,17 @@
 
         </androidx.cardview.widget.CardView>
 
-        <CheckBox
-            android:id="@+id/customCheck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:text="Custom"
-            app:layout_constraintEnd_toStartOf="@+id/vggCheck"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-        <CheckBox
-            android:id="@+id/vggCheck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:text="VGG16"
-            app:layout_constraintEnd_toStartOf="@+id/disCheck"
-            app:layout_constraintStart_toEndOf="@+id/customCheck"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-        <CheckBox
-            android:id="@+id/disCheck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="Deep Image Search"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:text="Escoger un modelo"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView" />
-
         <Button
             android:id="@+id/requestButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="244dp"
+            android:background="@drawable/ic_buttom"
             android:text="Buscar"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vggCheck" />
+            app:layout_constraintTop_toTopOf="@+id/cardView" />
 
         <TextView
             android:id="@+id/noResultsTextView"
@@ -136,7 +101,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/requestButton" />
+            app:layout_constraintTop_toBottomOf="@+id/requestButton"
+            app:layout_constraintVertical_bias="0.346" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

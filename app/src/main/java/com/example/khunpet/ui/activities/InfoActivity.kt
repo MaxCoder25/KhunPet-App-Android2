@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,7 @@ import com.example.khunpet.controllers.view_models.InfoViewModel
 import com.example.khunpet.databinding.ActivityInfoBinding
 import com.example.khunpet.model.Publication
 import com.example.khunpet.utils.AppDatabase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 
@@ -39,6 +41,7 @@ class InfoActivity : AppCompatActivity() {
 
 
 
+
         viewModel.publication.observe(this) {
             loadInformation(it)
         }
@@ -56,6 +59,14 @@ class InfoActivity : AppCompatActivity() {
             phoneNumber = numberInternational
             onCall(numberInternational)
         }
+
+
+        binding.deleteButton.setOnClickListener {
+            viewModel.deletePublication()
+            Toast.makeText(this, "Boletín borrado", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 
@@ -72,6 +83,14 @@ class InfoActivity : AppCompatActivity() {
                     .fit()
                     .placeholder(R.drawable.place_holder)
                     .into(binding.publicacionImv)
+                val guid = AppDatabase.getCurrentUser().uid
+
+                if (guid == publication.user) {
+                    binding.deleteButton.visibility = View.VISIBLE
+                } else {
+                    binding.deleteButton.visibility = View.INVISIBLE
+                }
+
             }
     }
 

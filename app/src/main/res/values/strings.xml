@@ -1,7 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Khunpet</string>
     <string name="user_email">userdefault@gmail.com</string>
     <string name="user_name">User Default</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="animal_type">
+        <item>Perro</item>
+        <item>Gato</item>
+    </string-array>
+
+    <string-array name="animal_gender">
+        <item>Macho</item>
+        <item>Hembra</item>
+    </string-array>
+
+    <string-array name="animal_color">
+        <item>Negro</item>
+        <item>Café</item>
+        <item>Dorado</item>
+        <item>Amarillo</item>
+        <item>Crema</item>
+        <item>Gris</item>
+        <item>Blanco</item>
+    </string-array>
+
+    <string-array name="animal_size">
+        <item>Pequeño</item>
+        <item>Mediano</item>
+        <item>Grande</item>
+        <item>Extra grande</item>
+        <item>No especificado</item>
+    </string-array>
+
+    <string-array name="animal_vacinate">
+        <item>Si</item>
+        <item>No</item>
+        <item>Desconozco</item>
+
+    </string-array>
+
+    <string-array name="animal_dewormed">
+        <item>Si</item>
+        <item>No</item>
+        <item>Desconozco</item>
+
+    </string-array>
+
+    <string-array name="animal_sterilized">
+        <item>Si</item>
+        <item>No</item>
+        <item>Desconozco</item>
+
+    </string-array>
+
+    <string-array name="animal_health">
+        <item>Saludable</item>
+        <item>Grave</item>
+        <item>Critico</item>
+        <item>No especificado</item>
+    </string-array>
+
+    <string-array name="animal_breed_dog">
+        <item>Cocker Spaniel</item>
+        <item>Pequines </item>
+        <item>Poodle </item>
+        <item>Dalmata</item>
+        <item>Pastor Alemán</item>
+        <item>Schnauzer </item>
+        <item>Chihuahua </item>
+        <item>Boxer </item>
+        <item>Chow Chow</item>
+        <item>Labrador Retriever</item>
+        <item>Mestizo </item>
+
+    </string-array>
+
+    <string-array name="animal_breed_cat">
+        <item>Siames</item>
+        <item>Persa</item>
+        <item>Angora</item>
+        <item>Bombay</item>
+        <item>Ragdoll</item>
+        <item>British Shorthair</item>
+        <item>Mestizo</item>
+
+    </string-array>
+    <string name="title_activity_display_map">¿Dónde perdiste a tu mascota?</string>
+
+
 </resources>

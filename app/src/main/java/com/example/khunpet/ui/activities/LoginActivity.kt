@@ -32,12 +32,30 @@ class LoginActivity : AppCompatActivity() {
               binding = ActivityLoginBinding.inflate(layoutInflater)
               setContentView(binding.root)
 
+
+
               binding.txtSignUp.setOnClickListener(){
                   var intent = Intent(this, RegistroActivity::class.java)
                   startActivity(intent)
               }
 
-              binding.btnIniciarSesion.setOnClickListener() {
+
+              binding.imageView2.setOnClickListener() {
+                  val intent = Intent(this, MainActivityRefug::class.java)
+                  this.startActivity(intent)
+
+              }
+/*
+
+
+              binding.txtSignUp.setOnClickListener() {
+                  val intent = Intent(this, MainActivity::class.java)
+                  this.startActivity(intent)
+
+              }
+*/
+
+             /* binding.btnIniciarSesion.setOnClickListener() {
 
                   val mEmail = binding.txtEmail.text.toString()
                   val mPassword = binding.txtPassword.text.toString()
@@ -51,7 +69,32 @@ class LoginActivity : AppCompatActivity() {
                           signIn(mEmail, mPassword)
                       }
                   }
-              }
+                  */
+
+
+                  binding.btnIniciarSesion.setOnClickListener() {
+                      val mEmail = binding.txtEmail.text.toString()
+                      val mPassword = binding.txtPassword.text.toString()
+
+                      when {
+                          mPassword.isEmpty() || mEmail.isEmpty() -> {
+                              Toast.makeText(this, "Email o contraseña o incorrectos.",
+                                  Toast.LENGTH_SHORT).show()
+                          }
+                          else -> {
+                              if(mEmail=="pae@gmail.com"){
+                                  reloadRefug()
+                              }else{
+                                  signIn(mEmail, mPassword)
+                              }
+                          }
+                      }
+                  }
+
+
+
+
+
 
               binding.loginPrincipal.setOnClickListener() {
                   hideSoftKeyboard(binding.root)
@@ -80,7 +123,16 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun reload() {
+
+       // val intent = Intent(this, MainActivityRefug::class.java)
+
         val intent = Intent(this, MainActivity::class.java)
+        this.startActivity(intent)
+    }
+
+
+    private fun reloadRefug() {
+        val intent = Intent(this, MainActivityRefug::class.java)
         this.startActivity(intent)
     }
 

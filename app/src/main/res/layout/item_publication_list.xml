@@ -31,11 +31,14 @@
             android:layout_height="50dp">
 
             <TextView
+                android:id="@+id/tipoPublicacionText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
-                android:text="Mascota encontrada"
-                android:textStyle="bold"></TextView>
+                android:text="Tipo"
+                android:textStyle="bold">
+
+            </TextView>
 
             <TextView
                 android:id="@+id/fechaPublicacionText"

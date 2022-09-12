@@ -27,6 +27,21 @@ class PublicationFetch {
 
     }
 
+    suspend fun fetchPublicationUser(guid : String): MutableList<Publication> = withContext(Dispatchers.Default) {
+        database = FirebaseFirestore.getInstance()
+        val ret: MutableList<Publication> = mutableListOf()
+        val task = database.collection("publicacion").whereEqualTo("user",guid).get().addOnSuccessListener { resultado->
+            for(documento in resultado){
+                val publicacion=documento.toObject(Publication::class.java)
+                ret.add(publicacion)
+            }
+        }
+        while (!task.isComplete) { }
+        Log.d("fetchuser",ret.toString())
+        ret
+
+    }
+
     suspend fun fetchSimilarPets(lista : MutableList<FlaskResponse>): MutableList<Publication> = withContext(Dispatchers.Default) {
         database = FirebaseFirestore.getInstance()
         val photos : MutableList<String> = lista.map { p -> p.image }.toMutableList()
@@ -62,4 +77,6 @@ class PublicationFetch {
         Log.d("fetchSimilarPetsDIS",ret.toString())
         ret
     }
+
+
 }

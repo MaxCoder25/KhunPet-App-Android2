@@ -1,20 +1,21 @@
 package com.example.khunpet.controllers.view_models
 
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.khunpet.R
-import com.example.khunpet.model.Publication
+import com.example.khunpet.model.Usuario
 import com.example.khunpet.ui.fragments.*
-import com.google.gson.Gson
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivityViewModel: ViewModel() {
 
     private val lostFoundFragment = LostAndFoundFragment()
     private val homeFragment = HomeFragment()
-    private val publicationsFragment = PublicationsFragment()
+    private val mapFragment = MapFragment()
     private val insertPublicationsFragment = InsertPublicationFragment()
+    private val userFragment = UserFragment()
 
     val currentFragment : MutableLiveData<Fragment> by lazy {
         MutableLiveData<Fragment>()
@@ -23,18 +24,31 @@ class MainActivityViewModel: ViewModel() {
         MutableLiveData<Int>()
     }
 
+    val usuario : MutableLiveData<Usuario> by lazy {
+        MutableLiveData<Usuario>()
+    }
+
+    fun getUsuario()  {
+        val guid : String = FirebaseAuth.getInstance().currentUser!!.uid
+        FirebaseFirestore.getInstance().collection("users")
+            .whereEqualTo("guid", guid)
+            .get()
+            .addOnCompleteListener {
+                if (it.result.documents.isNotEmpty()) {
+                    usuario.postValue(it.result.documents[0].toObject(Usuario::class.java)!!)
+                }
+            }
+    }
+
     init {
         currentFragment.postValue(homeFragment)
         currentTab.postValue(1)
+        getUsuario()
     }
 
     fun changeFragment(index:Int) : Boolean {
         changeTab(index)
         return when(index) {
-            5 -> {
-                currentFragment.postValue(insertPublicationsFragment)
-                true
-            }
             R.id.home_button -> {
                 currentFragment.postValue(homeFragment)
                 true
@@ -44,17 +58,23 @@ class MainActivityViewModel: ViewModel() {
                 true
             }
             R.id.publications_button -> {
-                currentFragment.postValue(publicationsFragment)
+                currentFragment.postValue(insertPublicationsFragment)
+                true
+            }
+            R.id.usuario_button -> {
+                currentFragment.postValue(userFragment)
+                true
+            }
+            10 -> {
+                currentFragment.postValue(mapFragment)
                 true
             }
             else -> false
         }
     }
 
-
     fun changeTab(index:Int) {
         currentTab.postValue(index)
     }
-
 
 }

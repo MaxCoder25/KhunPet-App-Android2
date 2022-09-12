@@ -3,15 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.khunpet">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:permissionGroup="android.permission-group.STORAGE"
         android:protectionLevel="dangerous" />
+
     <queries>
         <package android:name="com.whatsapp" />
     </queries>
+
     <application
         android:name=".utils.AppDatabase"
         android:allowBackup="true"
@@ -24,12 +29,49 @@
         android:theme="@style/Theme.Khunpet"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <!--
+             TODO: Before you run your application, you need a Google Maps API key.
+
+             To get one, follow the directions here:
+
+                https://developers.google.com/maps/documentation/android-sdk/get-api-key
+
+             Once you have your API key (it starts with "AIza"), define a new property in your
+             project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
+             "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value= "@string/google_maps_key" />
+
+        <activity
+            android:name=".ui.activities.DisplayMapActivity"
+            android:exported="false"
+            android:label="@string/title_activity_display_map" />
+        <activity
+            android:name=".ui.activities.MainActivityRefug"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".ui.activities.DataUserActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity android:name=".ui.activities.CheckEmailActivity" />
+        <activity
+            android:name=".ui.activities.RegistroActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".ui.activities.MainActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".ui.activities.InfoActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.MainActivity"
-            android:exported="true">
+            android:name=".ui.activities.InfoActivityRefug"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.LoginActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

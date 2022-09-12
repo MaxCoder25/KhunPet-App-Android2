@@ -3,12 +3,14 @@ package com.example.khunpet.ui.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.khunpet.R
 import com.example.khunpet.controllers.view_models.MainActivityViewModel
 import com.example.khunpet.databinding.ActivityMainBinding
+import com.example.khunpet.utils.AppDatabase
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,8 +35,15 @@ class MainActivity : AppCompatActivity() {
             binding.navBar.selectedItemId = it
         })
 
+        if (AppDatabase.getAuthInstance().currentUser == null) {
+            AppDatabase.setCurrentUser(AppDatabase.getAuthInstance().currentUser!!)
+        }
+
+
+
 
     }
+
 
     override fun onBackPressed() {
         if (viewModel.currentTab.value == R.id.home_button) {

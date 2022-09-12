@@ -37,7 +37,7 @@ class PublicationAdapter(list: List<Publication>, val onClickItemSelected: (Publ
 
             val pubText : String = "Publicado: "+item.fecha
             binding.fechaPublicacionText.text = pubText
-
+            binding.tipoPublicacionText.text = item.tipo
             storage.getReference("lost").child(item.foto!!).downloadUrl
                 .addOnSuccessListener {
                     Picasso.get()

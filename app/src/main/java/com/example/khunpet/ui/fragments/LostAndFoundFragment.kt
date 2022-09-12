@@ -2,15 +2,9 @@ package com.example.khunpet.ui.fragments
 
 import android.app.Activity.RESULT_OK
 import android.app.ProgressDialog
-import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.os.ParcelFileDescriptor
-import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +16,6 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.khunpet.R
 import com.example.khunpet.controllers.adapters.PublicationAdapter
@@ -38,9 +31,6 @@ import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.default
 import id.zelory.compressor.constraint.resolution
 import kotlinx.coroutines.launch
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileDescriptor
 
 
 class LostAndFoundFragment : Fragment() {
@@ -76,7 +66,7 @@ class LostAndFoundFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.customCheck.isChecked = true
+        //binding.customCheck.isChecked = true
 
         binding.uploadImageButton.setOnClickListener {
             ImagePicker.with(requireActivity())
@@ -86,7 +76,11 @@ class LostAndFoundFragment : Fragment() {
         }
 
         binding.requestButton.setOnClickListener {
+
+
             uploadImage()
+
+
         }
 
         viewModel.imageUri.observe(viewLifecycleOwner) {
@@ -101,6 +95,7 @@ class LostAndFoundFragment : Fragment() {
             }
         }
 
+/*
         binding.customCheck.setOnClickListener {
             binding.vggCheck.isChecked = false
             binding.disCheck.isChecked = false
@@ -111,12 +106,13 @@ class LostAndFoundFragment : Fragment() {
             binding.disCheck.isChecked = false
             uncheckCheckboxes(binding.customCheck.isChecked, binding.vggCheck.isChecked, binding.disCheck.isChecked)
         }
+
         binding.disCheck.setOnClickListener {
             binding.vggCheck.isChecked = false
             binding.customCheck.isChecked = false
             uncheckCheckboxes(binding.customCheck.isChecked, binding.vggCheck.isChecked, binding.disCheck.isChecked)
         }
-
+*/
 
         viewModel.retLiveData.observe(viewLifecycleOwner) {
             if (it.isEmpty()) binding.noResultsTextView.visibility = View.VISIBLE
@@ -127,19 +123,10 @@ class LostAndFoundFragment : Fragment() {
             }
         }
 
-    }
+}
 
-    private fun uncheckCheckboxes(custom : Boolean, vgg : Boolean, deep : Boolean) {
-        if (custom) {
-            viewModel.model.postValue(1)
-        }
-        else if (vgg) {
-            viewModel.model.postValue(2)
-        }
-        else if (deep) {
-            viewModel.model.postValue(3)
-        }
-    }
+
+
 
     private fun uploadImage() {
         val progressDialog = ProgressDialog(requireContext())
@@ -148,6 +135,8 @@ class LostAndFoundFragment : Fragment() {
         progressDialog.show()
         if (viewModel.imageUri.value != Uri.EMPTY) {
             viewModel.uploadImageToFirebaseStorage()
+
+
         } else {
             Toast.makeText(requireContext(), "Escoge una imagen primero", Toast.LENGTH_SHORT).show()
         }
