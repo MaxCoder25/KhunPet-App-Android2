@@ -180,7 +180,7 @@ class InsertPublicationFragment : Fragment() {
             tipo,
             condicion)
 
-        publication.user = viewModel.usuario.value!!.guid
+        publication.user = viewModel.usuario.value!!. guid
 
 
         lifecycleScope.launch {

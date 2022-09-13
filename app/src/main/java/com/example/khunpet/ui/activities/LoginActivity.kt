@@ -82,11 +82,14 @@ class LoginActivity : AppCompatActivity() {
                                   Toast.LENGTH_SHORT).show()
                           }
                           else -> {
-                              if(mEmail=="pae@gmail.com"){
+                            /*  if(mEmail=="pae@gmail.com"){
                                   reloadRefug()
                               }else{
                                   signIn(mEmail, mPassword)
-                              }
+                              }*/
+
+                              signIn(mEmail, mPassword)
+
                           }
                       }
                   }
@@ -126,7 +129,7 @@ class LoginActivity : AppCompatActivity() {
 
        // val intent = Intent(this, MainActivityRefug::class.java)
 
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, MainActivityRefug::class.java)
         this.startActivity(intent)
     }
 

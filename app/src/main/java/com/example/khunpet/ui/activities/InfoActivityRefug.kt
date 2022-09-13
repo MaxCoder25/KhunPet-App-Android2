@@ -53,7 +53,7 @@ class InfoActivityRefug : AppCompatActivity() {
         }
 
 
-        binding.wspButton.setOnClickListener {
+      /*  binding.wspButton.setOnClickListener {
             val numberLocal : String? = viewModel.publication.value!!.telefono
             val numberInternational : String = "593" + numberLocal!!.subSequence(1, numberLocal.length)
             phoneNumber = numberInternational
@@ -66,7 +66,7 @@ class InfoActivityRefug : AppCompatActivity() {
             phoneNumber = numberInternational
             onCall(numberInternational)
         }
-
+*/
 
 
         binding.btnPredecir.setOnClickListener {
@@ -89,7 +89,7 @@ class InfoActivityRefug : AppCompatActivity() {
         GlobalScope.launch(Dispatchers.Main){ // launches coroutine in main thread
             updateUi()
 
-            delay(15000L)
+            delay(8000L)
             binding.TiempoAdopcion.text = getStringSharedPreference_petAUX()
 
         }
@@ -133,7 +133,9 @@ class InfoActivityRefug : AppCompatActivity() {
                            petIDAux = "Más de 100 días"
                        }
                        else -> {
-                           petIDAux = "Faltan archivos de analisis de esta mascota"
+                          // petIDAux = "Faltan archivos de analisis de esta mascota, intente de nuevo"
+                           petIDAux = "..."
+
                        }
                    }
 

@@ -21,6 +21,7 @@ import com.example.khunpet.databinding.ActivityMainRefugBinding
 import com.example.khunpet.databinding.FragmentPublicationRefugBinding
 import com.example.khunpet.model.AdoptionPublication
 import com.example.khunpet.ui.activities.MainActivityRefug
+import com.example.khunpet.utils.AppDatabase
 import com.github.drjacky.imagepicker.ImagePicker
 import com.github.drjacky.imagepicker.constant.ImageProvider
 import com.squareup.picasso.Picasso
@@ -53,6 +54,8 @@ class InsertPublicationFragmentRefug : Fragment() {
         val arrayAdapterG = ArrayAdapter(requireContext(), R.layout.dropdown_item, breeds)
         binding.autoCompletebreedType.setAdapter(arrayAdapterG)
         }
+
+
         if(animals.get(0)=="Gato"){
             val breeds = resources.getStringArray(R.array.animal_breed_cat)
             val arrayAdapterG = ArrayAdapter(requireContext(), R.layout.dropdown_item, breeds)
@@ -65,6 +68,9 @@ class InsertPublicationFragmentRefug : Fragment() {
         val colors = resources.getStringArray(R.array.animal_color)
         val arrayAdapterC = ArrayAdapter(requireContext(), R.layout.dropdown_item, colors)
         binding.autoCompleteColorType.setAdapter(arrayAdapterC)
+
+        binding.autoCompleteColor2Type.setAdapter(arrayAdapterC)
+
 
         val sizes = resources.getStringArray(R.array.animal_size)
         val arrayAdapterS = ArrayAdapter(requireContext(), R.layout.dropdown_item, sizes)
@@ -309,7 +315,39 @@ class InsertPublicationFragmentRefug : Fragment() {
         }
 
 
-        val Color2 = Color1Aux
+        val Color2 = binding.autoCompleteColorType.text.toString()
+
+        var Color2Aux = "1"
+
+        when (Color2) {
+            "Negro" ->  {
+                Color2Aux = "1"
+            }
+            "Café" -> {
+                Color2Aux = "2"
+            }
+            "Dorado" -> {
+                Color2Aux = "3"
+            }
+            "Amarillo" -> {
+                Color2Aux = "4"
+            }
+            "Crema" -> {
+                Color2Aux = "5"
+            }
+            "Gris" -> {
+                Color2Aux = "6"
+            }
+            "Blanco" -> {
+                Color2Aux = "7"
+            }
+            else -> {
+                Color2Aux = "1"
+            }
+        }
+
+
+
         val Color3 ="1"
         val MaturitySize = binding.autoCompleteSizeType.text.toString()
 
@@ -426,10 +464,16 @@ class InsertPublicationFragmentRefug : Fragment() {
                  //nuevos
         val publicationDate_Mascota =""
         val ImageUrl= PetID + "-1.jpg"
-        val telefono ="0966842158"
-        val refugio ="PAE"
 
-        val publication = AdoptionPublication( Type.toString(),Name,Age,BreedAux,Breed2, GenderAux,Color1Aux,Color2,Color3,MaturitySizeAux,FurLength,VaccinatedAux,DewormedAux,SterilizedAux,HealthAux,
+      //  val telefono ="0966842158"
+        val telefono = getSharedPreferenceUserNumber()
+
+        //val refugio ="PAE"
+
+        val refugio = getSharedPreferenceUserName()
+
+
+        val publication = AdoptionPublication( Type.toString(),Name,Age,BreedAux,Breed2, GenderAux,Color1Aux,Color2Aux,Color3,MaturitySizeAux,FurLength,VaccinatedAux,DewormedAux,SterilizedAux,HealthAux,
             Description, Quantity, Fee,State,VideoAmt,PetID,RescuerID,PhotoAmt,AdoptionSpeed,publicationDate_Mascota,ImageUrl, telefono,refugio
                 )
 
@@ -484,6 +528,23 @@ class InsertPublicationFragmentRefug : Fragment() {
     }
 
 
+
+
+    fun getSharedPreferenceUserName(): String? {
+        var editorSP = AppDatabase.getShareDB()
+        var UserName = editorSP.getString("UserName", "null")
+
+        return UserName
+
+    }
+
+    fun getSharedPreferenceUserNumber(): String? {
+        var editorSP = AppDatabase.getShareDB()
+        var UserNumber = editorSP.getString("UserNumber", "0956418789")
+
+        return UserNumber
+
+    }
 
 }
 

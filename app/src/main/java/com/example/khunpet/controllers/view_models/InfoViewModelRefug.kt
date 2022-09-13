@@ -59,6 +59,8 @@ class InfoViewModelRefug : ViewModel() {
         imageUri.postValue(Uri.EMPTY)
         loading.postValue(false)
         model.postValue(1)
+
+
     }
 
 

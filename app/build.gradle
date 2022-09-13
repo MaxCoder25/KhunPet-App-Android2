@@ -111,6 +111,31 @@ dependencies {
     //Toco agregar manualmente, no agregar se daño
     //implementation group: 'com.google.api-client', name: 'google-http-client', version: '1.41.4' exclude module: 'httpclient' exclude module: 'jsr305'
 
+
+
+    /*
+    
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+
+    //implementation 'androidx.appcompat:appcompat:1.5.1'
+          //  ' support:appcompat-v7:27.0.1'
+   // implementation 'com.android.support.constraint:constraint-layout:2.0.4'
+
+    // Google Cloud Vision API
+    implementation 'com.google.android.gms:play-services-base:18.1.0'
+  //  implementation 'com.google.android.gms:play-services-auth:11.8.0'
+    implementation 'com.google.apis:google-api-services-vision:v1-rev16-1.22.0'
+    implementation ('com.google.api-client:google-api-client-android:1.30.2') {
+        exclude module: 'httpclient'
+    }
+    implementation ('com.google.http-client:google-http-client-gson:1.41.4') {
+        exclude module: 'httpclient'
+    }
+
+*/
+
+
     implementation 'com.google.android.gms:play-services-location:20.0.0'
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
 
