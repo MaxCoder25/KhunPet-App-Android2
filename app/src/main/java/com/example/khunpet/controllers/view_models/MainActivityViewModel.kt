@@ -17,6 +17,7 @@ class MainActivityViewModel: ViewModel() {
     private val mapFragment = MapFragment()
     private val insertPublicationsFragment = InsertPublicationFragment()
     private val userFragment = UserFragment()
+    private val foundFragment = FoundListFragment()
 
     val currentFragment : MutableLiveData<Fragment> by lazy {
         MutableLiveData<Fragment>()
@@ -50,6 +51,10 @@ class MainActivityViewModel: ViewModel() {
             }
             R.id.usuario_button -> {
                 currentFragment.postValue(userFragment)
+                true
+            }
+            R.id.encontrados_button -> {
+                currentFragment.postValue(foundFragment)
                 true
             }
             10 -> {

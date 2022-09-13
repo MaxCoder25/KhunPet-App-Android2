@@ -16,13 +16,17 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.khunpet.R
 import com.example.khunpet.controllers.adapters.PublicationAdapter
+import com.example.khunpet.controllers.adapters.PublicationFoundAdapter
 import com.example.khunpet.controllers.view_models.LostAndFoundViewModel
 import com.example.khunpet.databinding.FragmentLostAndFoundBinding
 import com.example.khunpet.model.Publication
+import com.example.khunpet.model.PublicationFound
 import com.example.khunpet.ui.activities.InfoActivity
+import com.example.khunpet.ui.activities.InfoFoundActivity
 import com.github.drjacky.imagepicker.ImagePicker
 import com.github.drjacky.imagepicker.constant.ImageProvider
 import com.google.gson.Gson
@@ -76,6 +80,8 @@ class LostAndFoundFragment : Fragment() {
         }
 
         binding.requestButton.setOnClickListener {
+            binding.resultRecyclerView.visibility = View.GONE
+            binding.resultRecyclerViewFound.visibility = View.GONE
             uploadImage()
         }
 
@@ -92,7 +98,15 @@ class LostAndFoundFragment : Fragment() {
         }
 
         viewModel.retLiveData.observe(viewLifecycleOwner) {
-            loadRecyclerView(it)
+            binding.resultRecyclerViewFound.visibility = View.GONE
+            binding.resultRecyclerView.visibility = View.VISIBLE
+            loadRecyclerViewLost(it)
+        }
+
+        viewModel.retLiveDataFound.observe(viewLifecycleOwner) {
+            binding.resultRecyclerView.visibility = View.GONE
+            binding.resultRecyclerViewFound.visibility = View.VISIBLE
+            loadRecyclerViewFound(it)
         }
 
 }
@@ -122,11 +136,7 @@ class LostAndFoundFragment : Fragment() {
         if (progressDialog.isShowing) progressDialog.dismiss()
     }
 
-    private fun loadRecyclerView(items : List<Publication>) {
-        binding.resultRecyclerView.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.resultRecyclerView.adapter = PublicationAdapter(items) { onClickPublication(it) }
-    }
+
 
 
     private fun loadWithPicasso(uri: Uri) {
@@ -148,6 +158,26 @@ class LostAndFoundFragment : Fragment() {
         val json = gson.toJson(publication)
         intent.putExtra("publication", json)
         startActivity(intent);
+    }
+
+    private fun loadRecyclerViewLost(items : List<Publication>) {
+        binding.resultRecyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.resultRecyclerView.adapter = PublicationAdapter(items) { onClickPublication(it) }
+    }
+
+    private fun loadRecyclerViewFound(items: List<PublicationFound>) {
+        binding.resultRecyclerViewFound.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.resultRecyclerViewFound.adapter = PublicationFoundAdapter(items) { onClickPublication(it) }
+    }
+
+    private fun onClickPublication(publication: PublicationFound) {
+        val intent = Intent(requireActivity(), InfoFoundActivity::class.java)
+        val gson = Gson()
+        val json = gson.toJson(publication)
+        intent.putExtra("publication", json)
+        startActivity(intent)
     }
 
 

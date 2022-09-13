@@ -18,6 +18,6 @@
     <item
         android:id="@+id/publications_found_insertar_button"
         android:enabled="true"
-        android:icon="@drawable/list_icon"
+        android:icon="@drawable/ic_find"
         android:title="Publicar Encontrado"/>
 </menu>

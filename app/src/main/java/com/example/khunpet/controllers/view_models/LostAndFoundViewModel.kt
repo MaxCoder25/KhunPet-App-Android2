@@ -11,6 +11,7 @@ import com.example.khunpet.caso_uso.PublicationFetch
 import com.example.khunpet.model.DeepImageSearchResponse
 import com.example.khunpet.model.FlaskResponse
 import com.example.khunpet.model.Publication
+import com.example.khunpet.model.PublicationFound
 import com.example.khunpet.utils.AppDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
@@ -37,6 +38,7 @@ class LostAndFoundViewModel : ViewModel() {
     private val storageReference = AppDatabase.getStorageReference()
 
     var retLiveData = MutableLiveData<List<Publication>>()
+    var retLiveDataFound = MutableLiveData<List<PublicationFound>>()
 
     val imageUri : MutableLiveData<Uri> by lazy {
         MutableLiveData<Uri>()
@@ -97,8 +99,15 @@ class LostAndFoundViewModel : ViewModel() {
                     val gson = Gson()
                     var lista : MutableList<FlaskResponse> = mutableListOf()
 
+
+
                     lista = gson.fromJson(response.body!!.string(), object : TypeToken<MutableList<FlaskResponse?>?>() {}.type)
-                    fetchSimilarPets(lista)
+                    if (tipo==1) {
+                        fetchSimilarPets(lista)
+                    } else {
+                        fetchSimilarPetsFound(lista)
+                    }
+
                     Log.d("Response",lista.toString())
                     loading.postValue(false)
                     deletePublication(fileName)
@@ -119,6 +128,21 @@ class LostAndFoundViewModel : ViewModel() {
                 }
             }
             retLiveData.postValue(ret)
+        }
+    }
+
+    fun fetchSimilarPetsFound(lista: MutableList<FlaskResponse>) {
+        val database = FirebaseFirestore.getInstance()
+        val photos : MutableList<String> = lista.map { p -> p.image }.toMutableList()
+        val ret: MutableList<PublicationFound> = mutableListOf()
+        database.collectionGroup("encontrado").get().addOnSuccessListener { resultado->
+            for(documento in resultado){
+                val publicacion=documento.toObject(PublicationFound::class.java)
+                if (photos.contains(publicacion.foto)) {
+                    ret.add(publicacion)
+                }
+            }
+            retLiveDataFound.postValue(ret)
         }
     }
 
