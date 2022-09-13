@@ -85,11 +85,15 @@ class LoginActivity : AppCompatActivity() {
                                   Toast.LENGTH_SHORT).show()
                           }
                           else -> {
-                              if(mEmail=="pae@gmail.com"){
+                             /* if(mEmail=="pae@gmail.com"){
                                   reloadRefug()
                               }else{
                                   signIn(mEmail, mPassword)
-                              }
+                              }*/
+
+
+                              signIn(mEmail, mPassword)
+
                           }
                       }
                   }

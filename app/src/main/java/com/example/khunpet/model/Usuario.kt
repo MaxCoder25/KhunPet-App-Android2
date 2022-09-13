@@ -9,5 +9,6 @@ data class Usuario(
     var nombre: String? = "",
     var numero: String? = "",
     var guid: String? = "",
-    var correo: String? = ""
+    var correo: String? = "",
+    var tipo: String? = ""
 )
