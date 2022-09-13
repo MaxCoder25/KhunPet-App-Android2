@@ -7,16 +7,18 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.example.khunpet.R
 import com.example.khunpet.controllers.view_models.MainActivityRefugViewModel
 import com.example.khunpet.databinding.ActivityMainRefugBinding
+import com.example.khunpet.utils.AppDatabase
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivityRefug: AppCompatActivity() {
 
     private lateinit var binding : ActivityMainRefugBinding
-    val viewModel : MainActivityRefugViewModel by viewModels()
+    private val viewModel : MainActivityRefugViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +39,7 @@ class MainActivityRefug: AppCompatActivity() {
 
             binding.navBarRefug.selectedItemId = it
         })
+
 
     }
 

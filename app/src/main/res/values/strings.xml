@@ -87,6 +87,8 @@
 
     </string-array>
     <string name="title_activity_display_map">¿Dónde perdiste a tu mascota?</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

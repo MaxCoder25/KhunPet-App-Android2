@@ -3,15 +3,15 @@ package com.example.khunpet.controllers.view_models
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.khunpet.model.Publication
+import com.example.khunpet.model.PublicationFound
 import com.example.khunpet.model.Usuario
 import com.example.khunpet.utils.AppDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 
-class InfoViewModel : ViewModel() {
+class InfoFoundViewModel : ViewModel() {
 
-    val publication : MutableLiveData<Publication> by lazy {
-        MutableLiveData<Publication>()
+    val publication : MutableLiveData<PublicationFound> by lazy {
+        MutableLiveData<PublicationFound>()
     }
 
     val user : MutableLiveData<Usuario> by lazy {
@@ -23,19 +23,17 @@ class InfoViewModel : ViewModel() {
     }
 
 
-
     fun deletePublication() {
 
-        FirebaseFirestore.getInstance().collection("publicacion").document(publication.value!!.documentId)
+        FirebaseFirestore.getInstance().collection("encontrado").document(publication.value!!.documentId)
             .delete()
             .addOnSuccessListener {
-                AppDatabase.getStorageReference().getReference("lost/${publication.value!!.foto}")
+                AppDatabase.getStorageReference().getReference("found/${publication.value!!.foto}")
                     .delete()
                     .addOnSuccessListener { Log.d("Delete", "DocumentSnapshot and Image successfully deleted!") }
                     .addOnFailureListener { e -> Log.w("Delete", "Error deleting document", e) }
             }
             .addOnFailureListener { e -> Log.w("Delete", "Error deleting document", e) }
     }
-
 
 }

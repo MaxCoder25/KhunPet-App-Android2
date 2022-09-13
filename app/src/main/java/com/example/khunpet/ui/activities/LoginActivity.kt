@@ -13,8 +13,11 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.khunpet.databinding.ActivityLoginBinding
+import com.example.khunpet.model.Usuario
+import com.example.khunpet.utils.AppDatabase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
 
@@ -82,14 +85,11 @@ class LoginActivity : AppCompatActivity() {
                                   Toast.LENGTH_SHORT).show()
                           }
                           else -> {
-                            /*  if(mEmail=="pae@gmail.com"){
+                              if(mEmail=="pae@gmail.com"){
                                   reloadRefug()
                               }else{
                                   signIn(mEmail, mPassword)
-                              }*/
-
-                              signIn(mEmail, mPassword)
-
+                              }
                           }
                       }
                   }
@@ -126,11 +126,27 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun reload() {
+        getUsuario()
+    }
 
-       // val intent = Intent(this, MainActivityRefug::class.java)
-
-        val intent = Intent(this, MainActivityRefug::class.java)
-        this.startActivity(intent)
+    fun getUsuario()  {
+        val guid : String = FirebaseAuth.getInstance().currentUser!!.uid
+        FirebaseFirestore.getInstance().collection("users")
+            .whereEqualTo("guid", guid)
+            .get()
+            .addOnCompleteListener {
+                if (it.result.documents.isNotEmpty()) {
+                    AppDatabase.setUsuario(it.result.documents[0].toObject(Usuario::class.java)!!)
+                    val usuario = AppDatabase.getUsuarioConectado()
+                    if (usuario.tipo=="usuario") {
+                        val intent = Intent(this, MainActivity::class.java)
+                        this.startActivity(intent)
+                    } else {
+                        val intent = Intent(this, MainActivityRefug::class.java)
+                        this.startActivity(intent)
+                    }
+                }
+            }
     }
 
 

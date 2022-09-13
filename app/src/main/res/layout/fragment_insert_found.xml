@@ -8,8 +8,9 @@
     tools:context=".ui.fragments.InsertPublicationFragment">
 
     <ScrollView
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -37,10 +38,10 @@
                 android:src="@drawable/photo_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.78"
+                app:layout_constraintHorizontal_bias="0.794"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.183" />
+                app:layout_constraintVertical_bias="0.22" />
 
             <LinearLayout
                 android:id="@+id/linearLayoutTexto"
@@ -61,7 +62,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Perdido en: "
+                    android:hint="Encontrado en: "
                     android:textColorHint="@color/black"
                     app:errorEnabled="true"
                     app:startIconDrawable="@drawable/ic_location_24">
@@ -94,26 +95,6 @@
                             android:text="Obtener ubicación">
                         </Button>
                     </LinearLayout>
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/recompensaField"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Recompensa (Opcional): "
-                    android:textColorHint="@color/black"
-                    app:errorEnabled="true"
-                    app:startIconDrawable="@drawable/ic_money">
-
-                    <EditText
-                        android:id="@+id/recompensaEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:ems="10"
-                        android:inputType="textPhonetic"
-                        tools:ignore="SpeakableTextPresentCheck" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -176,7 +157,7 @@
                     android:id="@+id/textView9"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Tamaño: "
+                    android:text="Condición del animal: "
                     android:textSize="15dp"
                     android:textColor="@color/black"
                     android:textAlignment="textStart" />
@@ -192,7 +173,7 @@
                         android:id="@+id/saludableRadioButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Grande">
+                        android:text="Saludable">
 
                     </RadioButton>
 
@@ -201,7 +182,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:focusedByDefault="true"
-                        android:text="Mediano">
+                        android:text="Grave">
 
                     </RadioButton>
 
@@ -209,7 +190,7 @@
                         android:id="@+id/criticoRadioButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Pequeño">
+                        android:text="Crítico">
 
                     </RadioButton>
                 </RadioGroup>
@@ -260,18 +241,11 @@
                     android:text="Publicar"
                     android:textColor="@color/white"/>
 
+
+
             </LinearLayout>
 
-            <ProgressBar
-                android:id="@+id/loadingPublicacion"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/uploadImageView" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

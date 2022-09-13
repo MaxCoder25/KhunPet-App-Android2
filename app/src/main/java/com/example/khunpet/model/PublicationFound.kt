@@ -1,9 +1,10 @@
 package com.example.khunpet.model
+
 import com.google.firebase.firestore.DocumentId
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Publication(
+data class PublicationFound(
     @DocumentId
     var documentId: String = "",
     var locacion: String? = "",
@@ -14,6 +15,6 @@ data class Publication(
     var fecha: String? = "",
     var foto: String? = "",
     var user: String? = "",
-    var recompensa: String? = "",
     var contexto: String? = "",
+    var nombre: String? = "",
 )

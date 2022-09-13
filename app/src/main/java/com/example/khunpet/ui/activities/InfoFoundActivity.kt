@@ -1,44 +1,41 @@
 package com.example.khunpet.ui.activities
 
-
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.khunpet.R
-import com.example.khunpet.controllers.view_models.InfoViewModel
-import com.example.khunpet.databinding.ActivityInfoBinding
-import com.example.khunpet.model.Publication
+import com.example.khunpet.controllers.view_models.InfoFoundViewModel
+import com.example.khunpet.databinding.ActivityInfoFoundBinding
+import com.example.khunpet.model.PublicationFound
 import com.example.khunpet.utils.AppDatabase
-import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 
+class InfoFoundActivity : AppCompatActivity() {
 
-class InfoActivity : AppCompatActivity() {
-
-    private lateinit var binding : ActivityInfoBinding
-    val viewModel : InfoViewModel by viewModels()
+    private lateinit var binding : ActivityInfoFoundBinding
+    val viewModel : InfoFoundViewModel by viewModels()
     var storage = AppDatabase.getStorageReference()
     private lateinit var phoneNumber : String
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityInfoBinding.inflate(layoutInflater)
+        binding = ActivityInfoFoundBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
         val pub : String? = intent.getStringExtra("publication")
         val gson = Gson()
-        viewModel.publication.postValue(gson.fromJson(pub,Publication::class.java))
-
+        viewModel.publication.postValue(gson.fromJson(pub, PublicationFound::class.java))
 
 
         viewModel.publication.observe(this) {
@@ -62,21 +59,21 @@ class InfoActivity : AppCompatActivity() {
 
         binding.deleteButton.setOnClickListener {
             viewModel.deletePublication()
-            Toast.makeText(this, "Boletín borrado", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Publicación borrada", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
     }
 
-
-    private fun loadInformation(publication: Publication) {
-        storage.getReference("lost").child(publication.foto!!).downloadUrl
+    private fun loadInformation(publication: PublicationFound) {
+        storage.getReference("found").child(publication.foto!!).downloadUrl
             .addOnSuccessListener {
                 binding.infoLocacion.text = publication.locacion
                 binding.infoCondicion.text = publication.condicion
                 binding.infoComentario.text = publication.descripcion
                 binding.infoFecha.text = publication.fecha
                 binding.infoContacto.text = publication.telefono
+                binding.infoNombre.text = "Fundación "+publication.nombre
                 Picasso.get()
                     .load(it.toString())
                     .fit()
@@ -84,11 +81,16 @@ class InfoActivity : AppCompatActivity() {
                     .into(binding.publicacionImv)
                 val guid = viewModel.user.value!!.guid
 
-                if (guid == publication.user) {
-                    binding.deleteButton.visibility = View.VISIBLE
-                } else {
+                if (AppDatabase.getUsuarioConectado().tipo!="usuario") {
                     binding.deleteButton.visibility = View.INVISIBLE
+                } else {
+                    if (guid == publication.user) {
+                        binding.deleteButton.visibility = View.VISIBLE
+                    } else {
+                        binding.deleteButton.visibility = View.INVISIBLE
+                    }
                 }
+
 
             }
     }

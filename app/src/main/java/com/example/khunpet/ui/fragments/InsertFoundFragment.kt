@@ -12,45 +12,41 @@ import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.khunpet.R
-import com.example.khunpet.controllers.view_models.InsertPublicationViewModel
-import com.example.khunpet.controllers.view_models.MainActivityViewModel
+import com.example.khunpet.controllers.view_models.InsertFoundViewModel
+import com.example.khunpet.controllers.view_models.MainActivityRefugViewModel
 import com.example.khunpet.controllers.view_models.MapViewModel
-import com.example.khunpet.databinding.FragmentInsertPublicationBinding
+import com.example.khunpet.databinding.FragmentInsertFoundBinding
 import com.example.khunpet.model.Publication
-import com.example.khunpet.model.Usuario
-import com.example.khunpet.ui.activities.DisplayMapActivity
+import com.example.khunpet.model.PublicationFound
 import com.example.khunpet.utils.AppDatabase
 import com.github.drjacky.imagepicker.ImagePicker
 import com.github.drjacky.imagepicker.constant.ImageProvider
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
-import com.google.firebase.auth.FirebaseAuth
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
 import java.util.*
 import java.util.regex.Pattern
 
+class InsertFoundFragment : Fragment() {
 
-class InsertPublicationFragment : Fragment() {
 
-
-    private val viewModel : InsertPublicationViewModel by activityViewModels()
-    private val activityViewModel : MainActivityViewModel by activityViewModels()
-    private var _binding: FragmentInsertPublicationBinding? = null
+    private val viewModel: InsertFoundViewModel by activityViewModels()
+    private val activityViewModel : MainActivityRefugViewModel by activityViewModels()
+    private var _binding: FragmentInsertFoundBinding? = null
     private val binding get() = _binding!!
 
     private val regex = "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*\$"
@@ -60,13 +56,11 @@ class InsertPublicationFragment : Fragment() {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
-
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentInsertPublicationBinding.inflate(inflater, container, false)
+        _binding = FragmentInsertFoundBinding.inflate(inflater, container, false)
         selectImg = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val uri = it.data?.data!!
@@ -97,13 +91,6 @@ class InsertPublicationFragment : Fragment() {
             loadWithPicasso(it)
         }
 
-        viewModel.loading.observe(viewLifecycleOwner) { bool ->
-            if (bool) {
-                binding.loadingPublicacion.visibility = View.VISIBLE
-            } else {
-                binding.loadingPublicacion.visibility = View.GONE
-            }
-        }
 
         binding.ubicacionActualButton.setOnClickListener {
             getCurrentLocation()
@@ -131,10 +118,7 @@ class InsertPublicationFragment : Fragment() {
                 binding.encontradoEditText.setText(address)
             }
         }
-
-
     }
-
 
     private fun buildPublication() {
 
@@ -147,11 +131,6 @@ class InsertPublicationFragment : Fragment() {
             return
         }
 
-        val locacion = binding.encontradoEditText.text.toString()
-        val telefono = binding.telefonoEditText.text.toString()
-        val descripcion = binding.comentarioEditText.text.toString()
-        val recompensa = binding.recompensaEditText.text.toString()
-
         val tipo = when(binding.tipoRadioGroup.checkedRadioButtonId) {
             R.id.perroRadioButton -> {
                 "Perro"
@@ -163,28 +142,31 @@ class InsertPublicationFragment : Fragment() {
 
         val condicion = when(binding.condicionRadioGroup.checkedRadioButtonId) {
             R.id.saludableRadioButton -> {
-                "Grande"
+                "Saludable"
             }
             R.id.graveRadioButton -> {
-                "Mediano"
+                "Grave"
             }
             R.id.criticoRadioButton -> {
-                "Pequeño"
+                "Crítico"
             }
-            else -> "Mediano"
+            else -> "Saludable"
         }
 
-        val publication = Publication(
-            UUID.randomUUID().toString(),
-            locacion,
-            telefono,
-            descripcion,
-            tipo,
-            condicion)
+        val publication = PublicationFound()
 
+        val locacion = binding.encontradoEditText.text.toString()
+        val telefono = binding.telefonoEditText.text.toString()
+        val descripcion = binding.comentarioEditText.text.toString()
+
+        publication.locacion = locacion
+        publication.telefono = telefono
+        publication.descripcion = descripcion
+        publication.condicion = condicion
+        publication.tipo = tipo
         publication.user = viewModel.usuario.value!!.guid
-        publication.recompensa = recompensa
-        publication.contexto = "Perdido"
+        publication.contexto = "Encontrado"
+        publication.nombre = AppDatabase.getUsuarioConectado().nombre
 
 
         lifecycleScope.launch {
@@ -324,7 +306,7 @@ class InsertPublicationFragment : Fragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         if (requestCode== PERMISSION_REQUEST_ACCESS_LOCATION) {
-            if (grantResults.isNotEmpty() && grantResults[0]==PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.isNotEmpty() && grantResults[0]== PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(requireContext(), "Permisos concedidos", Toast.LENGTH_SHORT).show()
                 getCurrentLocation()
             } else {

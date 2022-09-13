@@ -35,9 +35,6 @@ class MainActivity : AppCompatActivity() {
             binding.navBar.selectedItemId = it
         })
 
-        if (AppDatabase.getAuthInstance().currentUser == null) {
-            AppDatabase.setCurrentUser(AppDatabase.getAuthInstance().currentUser!!)
-        }
 
 
 

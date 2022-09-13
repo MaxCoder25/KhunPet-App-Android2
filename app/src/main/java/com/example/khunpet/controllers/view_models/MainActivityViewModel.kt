@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.khunpet.R
 import com.example.khunpet.model.Usuario
 import com.example.khunpet.ui.fragments.*
+import com.example.khunpet.utils.AppDatabase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -16,6 +17,7 @@ class MainActivityViewModel: ViewModel() {
     private val mapFragment = MapFragment()
     private val insertPublicationsFragment = InsertPublicationFragment()
     private val userFragment = UserFragment()
+    private val foundFragment = FoundListFragment()
 
     val currentFragment : MutableLiveData<Fragment> by lazy {
         MutableLiveData<Fragment>()
@@ -24,26 +26,12 @@ class MainActivityViewModel: ViewModel() {
         MutableLiveData<Int>()
     }
 
-    val usuario : MutableLiveData<Usuario> by lazy {
-        MutableLiveData<Usuario>()
-    }
 
-    fun getUsuario()  {
-        val guid : String = FirebaseAuth.getInstance().currentUser!!.uid
-        FirebaseFirestore.getInstance().collection("users")
-            .whereEqualTo("guid", guid)
-            .get()
-            .addOnCompleteListener {
-                if (it.result.documents.isNotEmpty()) {
-                    usuario.postValue(it.result.documents[0].toObject(Usuario::class.java)!!)
-                }
-            }
-    }
 
     init {
         currentFragment.postValue(homeFragment)
         currentTab.postValue(1)
-        getUsuario()
+
     }
 
     fun changeFragment(index:Int) : Boolean {
@@ -63,6 +51,10 @@ class MainActivityViewModel: ViewModel() {
             }
             R.id.usuario_button -> {
                 currentFragment.postValue(userFragment)
+                true
+            }
+            R.id.encontrados_button -> {
+                currentFragment.postValue(foundFragment)
                 true
             }
             10 -> {

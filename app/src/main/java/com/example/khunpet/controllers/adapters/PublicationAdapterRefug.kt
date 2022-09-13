@@ -9,6 +9,7 @@ import com.example.khunpet.databinding.ItemPublicationRefugBinding
 import com.example.khunpet.model.AdoptionPublication
 import com.example.khunpet.utils.AppDatabase
 import com.squareup.picasso.Picasso
+import java.lang.Exception
 
 class PublicationAdapterRefug(list: List<AdoptionPublication>, val onClickItemSelected: (AdoptionPublication) -> Unit) : RecyclerView.Adapter<PublicationAdapterRefug.PublicationViewHolder>()
 {
@@ -34,22 +35,27 @@ class PublicationAdapterRefug(list: List<AdoptionPublication>, val onClickItemSe
 
         fun render(item: AdoptionPublication, index: Int) {
 
-            binding.nameMascota.text= item.Name
+            try {
+                binding.nameMascota.text= item.Name
 
-            binding.fechaPublicacionText.text = "Fecha: "+item.publicationDate_Mascota
+                binding.fechaPublicacionText.text = "Fecha: "+item.publicationDate_Mascota
 
-            storage.getReference("lost/images").child(item.ImageUrl!!).downloadUrl
-                .addOnSuccessListener {
-                    Picasso.get()
-                        .load(it.toString())
-                        .fit()
-                        .placeholder(R.drawable.place_holder)
-                        .into(binding.imagePublicacion)
+                storage.getReference("lost/images").child(item.ImageUrl!!).downloadUrl
+                    .addOnSuccessListener {
+                        Picasso.get()
+                            .load(it.toString())
+                            .fit()
+                            .placeholder(R.drawable.place_holder)
+                            .into(binding.imagePublicacion)
+                    }
+
+                binding.itemPublicationRefug.setOnClickListener {
+                    onClickItemSelected(publicationList[index])
                 }
+            } catch (e: Exception) {
 
-            binding.itemPublicationRefug.setOnClickListener {
-                onClickItemSelected(publicationList[index])
             }
+
 
         }
 

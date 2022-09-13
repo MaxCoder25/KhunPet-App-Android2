@@ -11,10 +11,14 @@ import com.example.khunpet.caso_uso.PublicationFetch
 import com.example.khunpet.model.DeepImageSearchResponse
 import com.example.khunpet.model.FlaskResponse
 import com.example.khunpet.model.Publication
+import com.example.khunpet.model.PublicationFound
 import com.example.khunpet.utils.AppDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.*
 import java.io.IOException
 import java.lang.Exception
@@ -25,17 +29,16 @@ import java.util.concurrent.TimeUnit
 
 class LostAndFoundViewModel : ViewModel() {
 
-   // private val client = OkHttpClient()
-
     private val client = OkHttpClient.Builder()
         .connectTimeout(60, TimeUnit.SECONDS)
         .writeTimeout(60, TimeUnit.SECONDS)
         .readTimeout(60, TimeUnit.SECONDS)
         .build()
 
-    val storageReference = AppDatabase.getStorageReference()
+    private val storageReference = AppDatabase.getStorageReference()
 
     var retLiveData = MutableLiveData<List<Publication>>()
+    var retLiveDataFound = MutableLiveData<List<PublicationFound>>()
 
     val imageUri : MutableLiveData<Uri> by lazy {
         MutableLiveData<Uri>()
@@ -56,10 +59,7 @@ class LostAndFoundViewModel : ViewModel() {
     }
 
 
-    fun uploadImageToFirebaseStorage() {
-
-       // retLiveData.postValue(listOf())
-
+    fun uploadImageToFirebaseStorage(tipo: Int) {
 
         val formatter = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
         val now = Date()
@@ -67,13 +67,8 @@ class LostAndFoundViewModel : ViewModel() {
         loading.postValue(true)
         storageReference.getReference("temp/$fileName.jpg").putFile(imageUri.value!!)
 
-
             .addOnSuccessListener {
-
-
-                makeRequest(fileName)
-
-
+                makeRequest(fileName, tipo)
             }
             .addOnFailureListener {
                 imageUri.postValue(Uri.EMPTY)
@@ -81,57 +76,11 @@ class LostAndFoundViewModel : ViewModel() {
 
     }
 
-    private fun makeRequest(fileName: String) {
+    private fun makeRequest(fileName: String, tipo: Int) {
 
         val request = Request.Builder()
-            //.url("http://127.0.0.1:5000/$type/$fileName.jpg")
-            .url("https://khunpet-autoencoder.herokuapp.com/custom/$fileName.jpg")
+            .url("http://192.168.100.144:5000/vgg16/$fileName.jpg/$tipo")
             .build()
-
-        val type =  "custom"
-/*
-        when(model.value) {
-            1 -> {
-                val type =  "custom"
-                val request = Request.Builder()
-                    .url("http://10.0.2.2:5000/custom/$fileName.jpg")
-                    //.url("https://khunpet-autoencoder.herokuapp.com/custom/$fileName.jpg")
-                    .build()
-                Log.d("Response:", request.toString())
-            }
-            2 -> {
-                val type =    "vgg16"
-
-                val request = Request.Builder()
-                    //.url("http://127.0.0.1:5000/$type/$fileName.jpg")
-                    .url("http://10.0.2.2:5000/vgg16/$fileName.jpg")
-                    .build()
-                Log.d("Response:", request.toString())
-            }
-            3 -> {
-                val type =   "deepimagesearch"
-
-                val request = Request.Builder()
-                    //.url("http://127.0.0.1:5000/$type/$fileName.jpg")
-                    .url("http://10.0.2.2:5000/deepimagesearch/$fileName.jpg")
-                    .build()
-                Log.d("Response:", request.toString())
-            }
-            else ->
-             {
-                 val type =    "custom"
-
-                val request = Request.Builder()
-                //.url("http://127.0.0.1:5000/$type/$fileName.jpg")
-                .url("https://khunpet-autoencoder.herokuapp.com/custom/$fileName.jpg")
-                .build()
-                 Log.d("Response:", request.toString())
-
-                   }
-        }
-*/
-
-
 
 
 
@@ -150,36 +99,60 @@ class LostAndFoundViewModel : ViewModel() {
                     val gson = Gson()
                     var lista : MutableList<FlaskResponse> = mutableListOf()
 
-                    var listaDeepImageSearch = DeepImageSearchResponse()
 
-                        lista = gson.fromJson(response.body!!.string(), object : TypeToken<MutableList<FlaskResponse?>?>() {}.type)
-                        viewModelScope.launch {
-                            getItems(lista)
 
+                    lista = gson.fromJson(response.body!!.string(), object : TypeToken<MutableList<FlaskResponse?>?>() {}.type)
+                    if (tipo==1) {
+                        fetchSimilarPets(lista)
+                    } else {
+                        fetchSimilarPetsFound(lista)
                     }
 
                     Log.d("Response",lista.toString())
-                  //  Log.d("Response",listaDeepImageSearch.toString())
                     loading.postValue(false)
-
-
+                    deletePublication(fileName)
                 }
             }
         })
     }
 
-    suspend fun getItems(lista : MutableList<FlaskResponse>) {
-        val ret = PublicationFetch().fetchSimilarPets(lista)
-        retLiveData.value = ret
-        Log.d("Firebasefetch",ret.toString())
+    fun fetchSimilarPets(lista : MutableList<FlaskResponse>) {
+        val database = FirebaseFirestore.getInstance()
+        val photos : MutableList<String> = lista.map { p -> p.image }.toMutableList()
+        val ret: MutableList<Publication> = mutableListOf()
+        database.collectionGroup("publicacion").get().addOnSuccessListener { resultado->
+            for(documento in resultado){
+                val publicacion=documento.toObject(Publication::class.java)
+                if (photos.contains(publicacion.foto)) {
+                    ret.add(publicacion)
+                }
+            }
+            retLiveData.postValue(ret)
+        }
     }
 
-    suspend fun getItemsDIS(listaDeepImageSearch : DeepImageSearchResponse) {
-        val ret = PublicationFetch().fetchSimilarPetsDIS(listaDeepImageSearch)
-        retLiveData.value = ret
-        Log.d("Firebasefetch",ret.toString())
+    fun fetchSimilarPetsFound(lista: MutableList<FlaskResponse>) {
+        val database = FirebaseFirestore.getInstance()
+        val photos : MutableList<String> = lista.map { p -> p.image }.toMutableList()
+        val ret: MutableList<PublicationFound> = mutableListOf()
+        database.collectionGroup("encontrado").get().addOnSuccessListener { resultado->
+            for(documento in resultado){
+                val publicacion=documento.toObject(PublicationFound::class.java)
+                if (photos.contains(publicacion.foto)) {
+                    ret.add(publicacion)
+                }
+            }
+            retLiveDataFound.postValue(ret)
+        }
     }
 
+
+    fun deletePublication(fileName: String) {
+        AppDatabase.getStorageReference().getReference("temp/$fileName.jpg")
+            .delete()
+            .addOnSuccessListener { Log.d("Delete", "DocumentSnapshot and Image successfully deleted!") }
+            .addOnFailureListener { e -> Log.w("Delete", "Error deleting document", e) }
+    }
 
 
 

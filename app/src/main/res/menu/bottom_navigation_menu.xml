@@ -6,9 +6,14 @@
         android:icon="@drawable/home_icon"
         android:title="Boletín Perdidos" />
     <item
+        android:id="@+id/encontrados_button"
+        android:enabled="true"
+        android:icon="@drawable/ic_find"
+        android:title="Mis boletines"/>
+    <item
         android:id="@+id/lost_found_button"
         android:enabled="true"
-        android:icon="@drawable/icon_find"
+        android:icon="@drawable/ic_money"
         android:title="Busca mi mascota"/>
     <item
         android:id="@+id/publications_button"

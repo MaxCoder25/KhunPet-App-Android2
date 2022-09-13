@@ -1,24 +1,22 @@
 package com.example.khunpet.controllers.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.khunpet.R
-import com.example.khunpet.controllers.view_models.MainActivityViewModel
-import com.example.khunpet.databinding.ItemPublicationListBinding
-import com.example.khunpet.model.Publication
+import com.example.khunpet.databinding.ItemPublicationfoundListBinding
+import com.example.khunpet.model.PublicationFound
 import com.example.khunpet.utils.AppDatabase
 import com.squareup.picasso.Picasso
 
-class PublicationAdapter(list: List<Publication>, val onClickItemSelected: (Publication) -> Unit) : RecyclerView.Adapter<PublicationAdapter.PublicationViewHolder>()
+class PublicationFoundAdapter(list: List<PublicationFound>, val onClickItemSelected: (PublicationFound) -> Unit) : RecyclerView.Adapter<PublicationFoundAdapter.PublicationViewHolder>()
 {
-    private var publicationList: MutableList<Publication> = list.toMutableList()
+    private var publicationList: MutableList<PublicationFound> = list.toMutableList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PublicationViewHolder {
         var layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.item_publication_list, parent, false)
+        val view = layoutInflater.inflate(R.layout.item_publicationfound_list, parent, false)
         return PublicationViewHolder(view)
     }
 
@@ -31,26 +29,26 @@ class PublicationAdapter(list: List<Publication>, val onClickItemSelected: (Publ
 
     inner class PublicationViewHolder(publicationView: View): RecyclerView.ViewHolder(publicationView) {
 
-        var binding = ItemPublicationListBinding.bind(publicationView)
+        var binding = ItemPublicationfoundListBinding.bind(publicationView)
         var storage = AppDatabase.getStorageReference()
-        fun render(item: Publication, index: Int) {
+        fun render(item: PublicationFound, index: Int) {
 
             val pubText : String = "Publicado: "+item.fecha
-            val recText : String = "$: "+item.recompensa
-            binding.fechaPublicacionText.text = pubText
-            binding.tipoPublicacionText.text = item.tipo
-            binding.recompensaPublicacionText.text = recText
-            binding.contextoPublicationText.text = "Perdido"
-            storage.getReference("lost").child(item.foto!!).downloadUrl
+            val recText : String = ""+item.nombre
+            binding.fechaPublicacionFoundText.text = pubText
+            binding.tipoPublicacionFoundText.text = item.tipo
+            binding.recompensaPublicacionFoundText.text = recText
+            binding.contextoPublicationFoundText.text = "Encontrado"
+            storage.getReference("found").child(item.foto!!).downloadUrl
                 .addOnSuccessListener {
                     Picasso.get()
                         .load(it.toString())
                         .fit()
                         .placeholder(R.drawable.place_holder)
-                        .into(binding.imagePublicacion)
+                        .into(binding.imagePublicacionFound)
                 }
 
-            binding.itemPublication.setOnClickListener {
+            binding.itemPublicationFound.setOnClickListener {
                 onClickItemSelected(publicationList[index])
             }
 
@@ -59,5 +57,6 @@ class PublicationAdapter(list: List<Publication>, val onClickItemSelected: (Publ
 
     }
 
-}
 
+
+}
