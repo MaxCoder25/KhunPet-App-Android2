@@ -41,7 +41,6 @@ class InfoActivity : AppCompatActivity() {
 
 
 
-
         viewModel.publication.observe(this) {
             loadInformation(it)
         }
@@ -78,12 +77,13 @@ class InfoActivity : AppCompatActivity() {
                 binding.infoComentario.text = publication.descripcion
                 binding.infoFecha.text = publication.fecha
                 binding.infoContacto.text = publication.telefono
+                binding.infoNombreFound.text = publication.nombre
                 Picasso.get()
                     .load(it.toString())
                     .fit()
                     .placeholder(R.drawable.place_holder)
                     .into(binding.publicacionImv)
-                val guid = AppDatabase.getCurrentUser().uid
+                val guid = viewModel.user.value!!.guid
 
                 if (guid == publication.user) {
                     binding.deleteButton.visibility = View.VISIBLE

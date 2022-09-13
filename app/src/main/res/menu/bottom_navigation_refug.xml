@@ -10,4 +10,14 @@
         android:enabled="true"
         android:icon="@drawable/list_icon"
         android:title="Publicaciones"/>
+    <item
+        android:id="@+id/publications_found_button"
+        android:enabled="true"
+        android:icon="@drawable/list_icon"
+        android:title="Lista de encontrados"/>
+    <item
+        android:id="@+id/publications_found_insertar_button"
+        android:enabled="true"
+        android:icon="@drawable/list_icon"
+        android:title="Publicar Encontrado"/>
 </menu>

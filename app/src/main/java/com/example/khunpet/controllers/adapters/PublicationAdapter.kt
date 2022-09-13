@@ -36,8 +36,11 @@ class PublicationAdapter(list: List<Publication>, val onClickItemSelected: (Publ
         fun render(item: Publication, index: Int) {
 
             val pubText : String = "Publicado: "+item.fecha
+            val recText : String = "$: "+item.recompensa
             binding.fechaPublicacionText.text = pubText
             binding.tipoPublicacionText.text = item.tipo
+            binding.recompensaPublicacionText.text = recText
+            binding.contextoPublicationText.text = "Perdido"
             storage.getReference("lost").child(item.foto!!).downloadUrl
                 .addOnSuccessListener {
                     Picasso.get()

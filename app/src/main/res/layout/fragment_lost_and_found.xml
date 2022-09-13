@@ -10,16 +10,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-33dp">
+        android:orientation="vertical">
 
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="90dp"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,47 +25,39 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/resultRecyclerView"
-            android:layout_width="417dp"
-            android:layout_height="196dp"
-            android:layout_marginTop="110dp"
-            android:layout_marginBottom="80dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/border"
+            android:layout_marginEnd="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/requestButton"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/requestButton" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/uploadImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="220dp"
+            android:layout_marginEnd="50dp"
+            android:background="#5297bd"
             android:clickable="true"
             android:focusable="true"
             android:scaleType="fitXY"
-            android:background="#5297bd"
             android:src="@drawable/photo_icon"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.86"
-            app:layout_constraintStart_toStartOf="@+id/cardView"
-            app:layout_constraintTop_toTopOf="@+id/cardView"
-            app:layout_constraintVertical_bias="0.26"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
-            android:layout_width="293dp"
-            android:layout_height="219dp"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="65dp"
-            android:layout_marginEnd="100dp"
+            android:layout_width="300dp"
+            android:layout_height="250dp"
             app:cardCornerRadius="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="10dp"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/uploadedImageView"
@@ -78,31 +68,62 @@
 
         </androidx.cardview.widget.CardView>
 
+        <LinearLayout
+            android:id="@+id/layoutRadio"
+            app:layout_constraintTop_toBottomOf="@id/cardView"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="¿Qué necesitas?"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/tipoRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkedButton="@+id/perdidoRadioButton"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/perdidoRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:focusedByDefault="true"
+                    android:text="Quiero saber si esta mascota está perdida">
+
+                </RadioButton>
+
+                <RadioButton
+                    android:id="@+id/encontradoRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quiero saber si alguien encontró a esta mascota">
+
+                </RadioButton>
+            </RadioGroup>
+
+        </LinearLayout>
+
         <Button
             android:id="@+id/requestButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="244dp"
             android:background="@drawable/ic_buttom"
             android:text="Buscar"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/cardView" />
+            app:layout_constraintTop_toBottomOf="@+id/layoutRadio" />
 
-        <TextView
-            android:id="@+id/noResultsTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No hay resultados..."
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/requestButton"
-            app:layout_constraintVertical_bias="0.346" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

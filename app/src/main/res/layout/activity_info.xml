@@ -129,6 +129,20 @@
                         android:gravity="left"
                         android:padding="10dip" />
                 </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/border">
+
+                    <TextView
+                        android:padding="10dip"
+                        android:text="Encontrado por: " />
+
+                    <TextView
+                        android:id="@+id/infoNombreFound"
+                        android:gravity="left"
+                        android:padding="10dip" />
+                </TableRow>
             </TableLayout>
 
         </LinearLayout>
@@ -150,7 +164,7 @@
             android:clickable="true"
             android:focusable="true"
             android:scaleType="fitXY"
-            android:src="@drawable/call_icon "
+            android:src="@drawable/call_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.394"

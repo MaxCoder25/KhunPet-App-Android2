@@ -66,7 +66,7 @@ class LostAndFoundFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //binding.customCheck.isChecked = true
+        viewModel.retLiveData.postValue(mutableListOf<Publication>())
 
         binding.uploadImageButton.setOnClickListener {
             ImagePicker.with(requireActivity())
@@ -76,11 +76,7 @@ class LostAndFoundFragment : Fragment() {
         }
 
         binding.requestButton.setOnClickListener {
-
-
             uploadImage()
-
-
         }
 
         viewModel.imageUri.observe(viewLifecycleOwner) {
@@ -95,32 +91,8 @@ class LostAndFoundFragment : Fragment() {
             }
         }
 
-/*
-        binding.customCheck.setOnClickListener {
-            binding.vggCheck.isChecked = false
-            binding.disCheck.isChecked = false
-            uncheckCheckboxes(binding.customCheck.isChecked, binding.vggCheck.isChecked, binding.disCheck.isChecked)
-        }
-        binding.vggCheck.setOnClickListener {
-            binding.customCheck.isChecked = false
-            binding.disCheck.isChecked = false
-            uncheckCheckboxes(binding.customCheck.isChecked, binding.vggCheck.isChecked, binding.disCheck.isChecked)
-        }
-
-        binding.disCheck.setOnClickListener {
-            binding.vggCheck.isChecked = false
-            binding.customCheck.isChecked = false
-            uncheckCheckboxes(binding.customCheck.isChecked, binding.vggCheck.isChecked, binding.disCheck.isChecked)
-        }
-*/
-
         viewModel.retLiveData.observe(viewLifecycleOwner) {
-            if (it.isEmpty()) binding.noResultsTextView.visibility = View.VISIBLE
-            else
-            {
-                binding.noResultsTextView.visibility = View.GONE
-                loadRecyclerView(it)
-            }
+            loadRecyclerView(it)
         }
 
 }
@@ -134,9 +106,16 @@ class LostAndFoundFragment : Fragment() {
         progressDialog.setCancelable(false)
         progressDialog.show()
         if (viewModel.imageUri.value != Uri.EMPTY) {
-            viewModel.uploadImageToFirebaseStorage()
 
-
+            val tipo = when(binding.tipoRadioGroup.checkedRadioButtonId) {
+                R.id.perdidoRadioButton -> {
+                    1
+                }
+                R.id.encontradoRadioButton -> {
+                    2
+                } else -> 1
+            }
+            viewModel.uploadImageToFirebaseStorage(tipo)
         } else {
             Toast.makeText(requireContext(), "Escoge una imagen primero", Toast.LENGTH_SHORT).show()
         }
