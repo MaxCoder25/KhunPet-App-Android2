@@ -14,7 +14,6 @@ data class Publication(
     var fecha: String? = "",
     var foto: String? = "",
     var user: String? = "",
-    var nombre: String? = "",
     var recompensa: String? = "",
     var contexto: String? = "",
 )

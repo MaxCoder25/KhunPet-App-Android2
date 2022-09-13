@@ -183,7 +183,6 @@ class InsertPublicationFragment : Fragment() {
             condicion)
 
         publication.user = viewModel.usuario.value!!.guid
-        publication.nombre = AppDatabase.getUsuarioConectado().nombre
         publication.recompensa = recompensa
         publication.contexto = "Perdido"
 
