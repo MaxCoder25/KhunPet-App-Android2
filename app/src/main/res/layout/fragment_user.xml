@@ -37,7 +37,7 @@
         <LinearLayout
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/border"
+            android:layout_marginRight="20dp"
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
@@ -49,13 +49,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="Nombre" />
+                android:text="Nombre:" />
 
             <TextView
                 android:id="@+id/userNombreTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:layout_marginBottom="15dp"
                 android:text="Leonardo Salinas" />
 
@@ -70,7 +70,7 @@
                 android:id="@+id/userCorreoTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:layout_marginBottom="15dp"
                 android:text="lasalinasb@uce.edu.ec" />
 
@@ -79,12 +79,12 @@
                 android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Teléfono" />
+                android:text="Teléfono:" />
 
             <TextView
                 android:id="@+id/userTelefonoTextView"
                 android:layout_width="match_parent"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:layout_height="wrap_content"
                 android:text="0984358183" />
 
@@ -98,7 +98,7 @@
         app:layout_constraintTop_toBottomOf="@+id/userDataLayout"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:text="Mis Boletines"
+        android:text="Mis Mascotas"
         android:textSize="30sp"
         android:textStyle="bold"
         android:background="@drawable/border"

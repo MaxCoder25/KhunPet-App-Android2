@@ -6,206 +6,223 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.InfoActivity">
 
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/imgHolderCardView"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-
-        <ImageView
-            android:id="@+id/publicacionImv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            tools:src="@tools:sample/avatars" />
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgHolderCardView">
-
-        <LinearLayout
-            android:id="@+id/linearLayout3"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TableLayout
-                android:layout_width="300dp"
-                android:layout_height="match_parent">
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/border">
-
-                    <TextView
-                        android:padding="10dip"
-                        android:text="Encontrado en: " />
-
-                    <TextView
-                        android:id="@+id/infoLocacion"
-                        android:layout_width="187dp"
-                        android:gravity="start"
-                        android:padding="10dip" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/border">
-
-                    <TextView
-                        android:padding="10dip"
-                        android:text="Fecha: " />
-
-                    <TextView
-                        android:id="@+id/infoFecha"
-                        android:layout_width="203dp"
-                        android:gravity="start"
-                        android:padding="10dip" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/border">
-
-                    <TextView
-                        android:padding="10dip"
-                        android:text="Condicion: " />
-
-                    <TextView
-                        android:id="@+id/infoCondicion"
-                        android:gravity="start"
-                        android:padding="10dip" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/border">
-
-                    <TextView
-                        android:padding="10dip"
-                        android:text="Contacto: " />
-
-                    <TextView
-                        android:id="@+id/infoContacto"
-                        android:gravity="start"
-                        android:padding="10dip" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/border">
-
-                    <TextView
-                        android:padding="10dip"
-                        android:text="Se encuentra en: " />
-
-                    <TextView
-                        android:id="@+id/infoNombre"
-                        android:gravity="start"
-                        android:padding="10dip" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/border">
-
-                    <TextView
-                        android:padding="10dip"
-                        android:text="Comentario: " />
-
-                    <TextView
-                        android:id="@+id/infoComentario"
-                        android:layout_width="wrap_content"
-                        android:gravity="start"
-                        android:lines="4"
-                        android:maxLines="4"
-                        android:padding="10dip" />
-                </TableRow>
-            </TableLayout>
-
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        tools:layout_editor_absoluteX="1dp">
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/callButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#25D366"
-            android:clickable="true"
-            android:focusable="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/call_icon"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.394"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/wspButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#ffe65d"
-            android:clickable="true"
-            android:focusable="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/whatsapp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.6"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/deleteButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="15dp"
-        android:clickable="true"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgHolderCardView"
-        app:srcCompat="@drawable/ic_delete" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgHolderCardView">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/imgHolderCardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/publicacionImv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        tools:src="@tools:sample/avatars" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="30dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imgHolderCardView">
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout3"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TableLayout
+                            android:layout_width="300dp"
+                            android:layout_height="match_parent">
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/border">
+
+                                <TextView
+                                    android:padding="10dip"
+                                    android:text="Encontrado en: " />
+
+                                <TextView
+                                    android:id="@+id/infoLocacion"
+                                    android:layout_width="187dp"
+                                    android:gravity="start"
+                                    android:padding="10dip" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/border">
+
+                                <TextView
+                                    android:padding="10dip"
+                                    android:text="Fecha: " />
+
+                                <TextView
+                                    android:id="@+id/infoFecha"
+                                    android:layout_width="203dp"
+                                    android:gravity="start"
+                                    android:padding="10dip" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/border">
+
+                                <TextView
+                                    android:padding="10dip"
+                                    android:text="Condicion: " />
+
+                                <TextView
+                                    android:id="@+id/infoCondicion"
+                                    android:gravity="start"
+                                    android:padding="10dip" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/border">
+
+                                <TextView
+                                    android:padding="10dip"
+                                    android:text="Contacto: " />
+
+                                <TextView
+                                    android:id="@+id/infoContacto"
+                                    android:gravity="start"
+                                    android:padding="10dip" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/border">
+
+                                <TextView
+                                    android:padding="10dip"
+                                    android:text="Se encuentra en: " />
+
+                                <TextView
+                                    android:id="@+id/infoNombre"
+                                    android:gravity="start"
+                                    android:padding="10dip" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/border">
+
+                                <TextView
+                                    android:padding="10dip"
+                                    android:text="Comentario: " />
+
+                                <TextView
+                                    android:id="@+id/infoComentario"
+                                    android:layout_width="wrap_content"
+                                    android:gravity="start"
+                                    android:lines="4"
+                                    android:maxLines="4"
+                                    android:padding="10dip" />
+                            </TableRow>
+                        </TableLayout>
+
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+                    tools:layout_editor_absoluteX="1dp">
 
 
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/deleteButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="15dp"
+                    android:clickable="true"
+                    android:visibility="gone"
+                    app:backgroundTint="#e61919"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imgHolderCardView"
+                    app:srcCompat="@drawable/ic_delete" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/wspButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#ffe65d"
+                    android:clickable="true"
+
+                    android:layout_marginLeft="130dp"
+                    android:focusable="true"
+                    android:src="@drawable/whatsapp"
+                    />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/callButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#25D366"
+                    android:clickable="true"
+                    android:layout_marginLeft="200dp"
+                    android:layout_marginTop="-55dp"
+                    android:focusable="true"
+                    android:src="@drawable/call_icon"
+                   />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
