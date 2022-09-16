@@ -44,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
 
 
               binding.imageView2.setOnClickListener() {
-                  val intent = Intent(this, MainActivityRefug::class.java)
+                  val intent = Intent(this, MainActivityVision::class.java)
                   this.startActivity(intent)
 
               }

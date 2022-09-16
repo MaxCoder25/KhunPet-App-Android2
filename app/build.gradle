@@ -6,6 +6,11 @@ plugins {
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
+configurations {
+    implementation.exclude module:'guava-jdk5'
+    all*.exclude group: 'com.google.guava', module: 'listenablefuture'
+}
+
 android {
     compileSdk 32
 
@@ -105,35 +110,35 @@ dependencies {
     // Compresion de imgs
     implementation 'id.zelory:compressor:3.0.1'
 
-    //google apis, natural language
-  //  implementation group: 'com.google.apis', name: 'google-api-services-language', version: 'v1-rev477-1.25.0' exclude module: 'httpclient' exclude module: 'jsr305'
-    //implementation group: 'com.google.api-client', name: 'google-api-client-android', version: '1.30.2' exclude module: 'httpclient' exclude module: 'jsr305'
-    //Toco agregar manualmente, no agregar se daño
-    //implementation group: 'com.google.api-client', name: 'google-http-client', version: '1.41.4' exclude module: 'httpclient' exclude module: 'jsr305'
-
-
-
-    /*
-    
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
-
-    //implementation 'androidx.appcompat:appcompat:1.5.1'
-          //  ' support:appcompat-v7:27.0.1'
-   // implementation 'com.android.support.constraint:constraint-layout:2.0.4'
 
     // Google Cloud Vision API
-    implementation 'com.google.android.gms:play-services-base:18.1.0'
-  //  implementation 'com.google.android.gms:play-services-auth:11.8.0'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.10"
+
+    //implementation 'androidx.appcompat:appcompat:1.5.1'
+    //  ' support:appcompat-v7:27.0.1'
+    // implementation 'com.android.support.constraint:constraint-layout:2.0.4'
+
+
+    // Google Cloud Vision API
+    implementation 'com.google.android.gms:play-services-base:11.8.0'
+    implementation 'com.google.android.gms:play-services-auth:11.8.0'
     implementation 'com.google.apis:google-api-services-vision:v1-rev16-1.22.0'
-    implementation ('com.google.api-client:google-api-client-android:1.30.2') {
+
+    implementation ('com.google.api-client:google-api-client-android:1.22.0') {
         exclude module: 'httpclient'
+        exclude group:'com.google.guava'
     }
-    implementation ('com.google.http-client:google-http-client-gson:1.41.4') {
+    implementation ('com.google.http-client:google-http-client-gson:1.20.0') {
         exclude module: 'httpclient'
+        exclude group:'com.google.guava'
     }
 
-*/
+//error dependencias duplicadas guava de google
+
+    implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
+    implementation 'com.google.guava:guava:31.1-android'
+
 
 
     implementation 'com.google.android.gms:play-services-location:20.0.0'

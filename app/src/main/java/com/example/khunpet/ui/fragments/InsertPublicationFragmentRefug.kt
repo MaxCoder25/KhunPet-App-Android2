@@ -21,6 +21,7 @@ import com.example.khunpet.databinding.ActivityMainRefugBinding
 import com.example.khunpet.databinding.FragmentPublicationRefugBinding
 import com.example.khunpet.model.AdoptionPublication
 import com.example.khunpet.ui.activities.MainActivityRefug
+import com.example.khunpet.ui.activities.MainActivityVision
 import com.example.khunpet.utils.AppDatabase
 import com.github.drjacky.imagepicker.ImagePicker
 import com.github.drjacky.imagepicker.constant.ImageProvider
@@ -457,6 +458,9 @@ class InsertPublicationFragmentRefug : Fragment() {
 
         val PetID = ShortUUID
 
+        saveSharedPreferencepetIDVISION(PetID)
+
+
         val RescuerID = "2ece3b2573dcdcebd774e635dca15fd9"
         val PhotoAmt = "1"
         val AdoptionSpeed = "0"
@@ -477,9 +481,13 @@ class InsertPublicationFragmentRefug : Fragment() {
             Description, Quantity, Fee,State,VideoAmt,PetID,RescuerID,PhotoAmt,AdoptionSpeed,publicationDate_Mascota,ImageUrl, telefono,refugio
                 )
 
-        viewModel.publish(publication,PetID)
+        //viewModel.publish(publication,PetID)
 
         Toast.makeText(requireContext(), "Publicación exitosa", Toast.LENGTH_SHORT).show()
+
+        val intent = Intent (getActivity(), MainActivityVision::class.java)
+        getActivity()?.startActivity(intent)
+
 
     }
 
@@ -545,6 +553,14 @@ class InsertPublicationFragmentRefug : Fragment() {
         return UserNumber
 
     }
+
+
+    fun saveSharedPreferencepetIDVISION(petID: String) {
+        var editorSP = AppDatabase.getShareDB().edit()
+        editorSP.putString ("petIDVISION", petID )
+        editorSP.commit()
+    }
+
 
 }
 

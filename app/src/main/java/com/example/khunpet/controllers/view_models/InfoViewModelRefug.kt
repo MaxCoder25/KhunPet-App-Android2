@@ -30,11 +30,6 @@ class InfoViewModelRefug : ViewModel() {
 
 
 
-
-
-
-
-
     val storageReference = AppDatabase.getStorageReference()
 
     val publication : MutableLiveData<AdoptionPublication> by lazy {
