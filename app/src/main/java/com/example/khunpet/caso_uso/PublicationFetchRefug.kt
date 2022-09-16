@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 
 
 class PublicationFetchRefug {
@@ -65,14 +66,17 @@ class PublicationFetchRefug {
 
         val task = database.collectionGroup("mascotaEnAdopcion").get().addOnSuccessListener { resultado->
 
-            for(documento in resultado){
+            try {
+                for(documento in resultado){
 
-             if(documento.toObject(AdoptionPublication::class.java ).refugio==ret1[0].nombre ){
-                val publicacion = documento.toObject(AdoptionPublication::class.java)
-                ret.add(publicacion)
-                     }
+                    if(documento.toObject(AdoptionPublication::class.java ).refugio==ret1[0].nombre ){
+                        val publicacion = documento.toObject(AdoptionPublication::class.java)
+                        ret.add(publicacion)
+                    }
 
-            }
+                }
+            }catch (e: Exception){}
+
         }
         while (!task.isComplete) {
 

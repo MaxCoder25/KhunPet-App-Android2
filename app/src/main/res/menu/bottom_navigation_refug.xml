@@ -9,15 +9,15 @@
         android:id="@+id/publications_button_refug"
         android:enabled="true"
         android:icon="@drawable/list_icon"
-        android:title="Publicaciones"/>
+        android:title="Predecir"/>
     <item
         android:id="@+id/publications_found_button"
         android:enabled="true"
-        android:icon="@drawable/list_icon"
-        android:title="Lista de encontrados"/>
+        android:icon="@drawable/ic_list_24"
+        android:title="Encontrados"/>
     <item
         android:id="@+id/publications_found_insertar_button"
         android:enabled="true"
         android:icon="@drawable/ic_find"
-        android:title="Publicar Encontrado"/>
+        android:title="Publicar"/>
 </menu>

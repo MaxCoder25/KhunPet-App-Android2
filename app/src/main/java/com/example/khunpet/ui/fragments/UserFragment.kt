@@ -1,6 +1,7 @@
 package com.example.khunpet.ui.fragments
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -20,8 +21,10 @@ import com.example.khunpet.model.Publication
 import com.example.khunpet.ui.activities.InfoActivity
 import com.example.khunpet.utils.AppDatabase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
+import java.io.File
 
 
 class UserFragment : Fragment() {
@@ -59,6 +62,19 @@ class UserFragment : Fragment() {
         }
 
         viewModel.usuario.observe(viewLifecycleOwner) {
+
+            val userId = AppDatabase.getAuthInstance().currentUser!!.uid
+            val storageImg = FirebaseStorage.getInstance().reference.child("Users/img$userId")
+
+            val img = File.createTempFile("tempImage","jpg")
+
+            storageImg.getFile(img).addOnSuccessListener {
+
+                val bitmap = BitmapFactory.decodeFile(img.absolutePath)
+                binding.profileImage.setImageBitmap(bitmap)
+            }
+
+
             binding.userCorreoTextView.text = AppDatabase.getAuthInstance().currentUser!!.email
             val nombre = viewModel.usuario.value!!.nombre + " " + viewModel.usuario.value!!.apellido
             binding.userNombreTextView.text = nombre

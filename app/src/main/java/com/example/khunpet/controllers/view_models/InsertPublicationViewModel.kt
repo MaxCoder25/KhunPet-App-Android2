@@ -48,7 +48,7 @@ class InsertPublicationViewModel : ViewModel() {
 
     fun insertarPublicacion(publication: Publication) {
         loading.postValue(true)
-        val formatter = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
+        val formatter = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
         val now = Date()
         val fileName = formatter.format(now)
         val storageReference = AppDatabase.getStorageReference()
