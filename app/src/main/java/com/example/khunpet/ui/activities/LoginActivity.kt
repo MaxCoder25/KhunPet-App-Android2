@@ -3,12 +3,9 @@ package com.example.khunpet.ui.activities
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -19,7 +16,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
-
 
 
 class LoginActivity : AppCompatActivity() {
@@ -38,16 +34,32 @@ class LoginActivity : AppCompatActivity() {
 
 
               binding.txtSignUp.setOnClickListener(){
-                  var intent = Intent(this, RegistroActivity::class.java)
+                 // var intent = Intent(this, RegistroActivity::class.java)
+                  var intent = Intent(this, MainActivityRefug::class.java)
+
                   startActivity(intent)
               }
 
 
               binding.imageView2.setOnClickListener() {
-                  val intent = Intent(this, MainActivityRefug::class.java)
+                  //val intent = Intent(this, MainActivityRefug::class.java)
+                  val intent = Intent(this, MainActivityVision::class.java)
+
                   this.startActivity(intent)
 
               }
+
+
+              /*
+              binding.imageView2.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  startActivity(new Intent(MainActivity.this, MainActivityVision.class));
+              }
+              } );
+*/
+
+
 /*
 
 

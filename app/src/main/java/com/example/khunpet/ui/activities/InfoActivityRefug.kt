@@ -104,9 +104,6 @@ class InfoActivityRefug : AppCompatActivity() {
 
              //  viewModel.publication.observe(this) {
 
-
-
-
                var petID =getStringSharedPreference_petID()
 
 

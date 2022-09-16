@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import com.example.khunpet.model.AdoptionPublication
 import com.example.khunpet.utils.AppDatabase
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.StorageReference
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -16,6 +18,11 @@ class InsertPublicationRefugViewModel : ViewModel() {
     val imageUri : MutableLiveData<Uri> by lazy {
         MutableLiveData<Uri>()
     }
+
+    val jsonUri : MutableLiveData<Uri> by lazy {
+        MutableLiveData<Uri>()
+    }
+
 
     val loading : MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>()
@@ -27,6 +34,7 @@ class InsertPublicationRefugViewModel : ViewModel() {
 
     init {
         imageUri.postValue(Uri.EMPTY)
+        jsonUri.postValue(Uri.EMPTY)
         loading.postValue(false)
     }
 
@@ -39,6 +47,7 @@ class InsertPublicationRefugViewModel : ViewModel() {
         publication.publicationDate_Mascota = now
         publication.ImageUrl = uploadImageToFirebaseStorage(PetID)
 
+        //uploadJsonToFirebaseStorage(PetID)
 
 
         db.collection("mascotaEnAdopcion")
@@ -72,4 +81,51 @@ class InsertPublicationRefugViewModel : ViewModel() {
         while (!task.isComplete){}
         return "$fileName-1.jpg"
     }
+
+     fun uploadJsonToFirebaseStorage() {
+
+         val PetID = getSharedPreferencePetIDVISION()
+
+         val storageReference = AppDatabase.getStorageReference()
+
+
+         var file = Uri.fromFile(File("/storage/1DFA-2608/MyIdea/" + PetID + "-1.json"))
+         val riversRef = storageReference.getReference().child("lost/imageJson/$PetID-1.json")
+         var uploadTask = riversRef.putFile(file)
+
+         uploadTask.addOnFailureListener {
+             // Handle unsuccessful uploads
+         }.addOnSuccessListener { taskSnapshot ->
+             // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+             Log.d("Upload","Upload successfull json file")
+
+         }
+
+
+         /*
+        var task = storageReference.getReference("lost/imageJson/$PetID-1.json").putFile(jsonUri.value!!)
+            .addOnSuccessListener {
+                Log.d("Upload","Upload successfull json file")
+            }
+            .addOnFailureListener {
+                imageUri.postValue(Uri.EMPTY)
+            }
+
+        while (!task.isComplete){}
+        return "$PetID-1.json"*/
+
+
+
+    }
+
+    fun  getSharedPreferencePetIDVISION(): String? {
+        var editorSP = AppDatabase.getShareDB()
+        var petIDVISION = editorSP.getString("petIDVISION", "a2sf425b")
+
+        return petIDVISION
+
+    }
+
+
+
 }

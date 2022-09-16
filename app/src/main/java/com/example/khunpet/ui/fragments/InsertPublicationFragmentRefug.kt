@@ -11,16 +11,14 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.example.khunpet.R
 import com.example.khunpet.controllers.view_models.InsertPublicationRefugViewModel
 import com.example.khunpet.databinding.ActivityMainRefugBinding
 import com.example.khunpet.databinding.FragmentPublicationRefugBinding
 import com.example.khunpet.model.AdoptionPublication
-import com.example.khunpet.ui.activities.MainActivityRefug
+import com.example.khunpet.ui.activities.MainActivityVision
 import com.example.khunpet.utils.AppDatabase
 import com.github.drjacky.imagepicker.ImagePicker
 import com.github.drjacky.imagepicker.constant.ImageProvider
@@ -107,8 +105,15 @@ class InsertPublicationFragmentRefug : Fragment() {
 
         selectImg = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
+
+
                 val uri = it.data?.data!!
+
+
                 viewModel.imageUri.postValue(uri)
+
+
+
             }
         }
         return binding.root
@@ -457,6 +462,10 @@ class InsertPublicationFragmentRefug : Fragment() {
 
         val PetID = ShortUUID
 
+        //PARA VISION API
+        saveSharedPreferencepetIDVISION(PetID)
+
+
         val RescuerID = "2ece3b2573dcdcebd774e635dca15fd9"
         val PhotoAmt = "1"
         val AdoptionSpeed = "0"
@@ -477,9 +486,12 @@ class InsertPublicationFragmentRefug : Fragment() {
             Description, Quantity, Fee,State,VideoAmt,PetID,RescuerID,PhotoAmt,AdoptionSpeed,publicationDate_Mascota,ImageUrl, telefono,refugio
                 )
 
-        viewModel.publish(publication,PetID)
+      //  viewModel.publish(publication,PetID)
 
         Toast.makeText(requireContext(), "Publicación exitosa", Toast.LENGTH_SHORT).show()
+
+        val intent = Intent (getActivity(), MainActivityVision::class.java)
+        getActivity()?.startActivity(intent)
 
     }
 
@@ -545,6 +557,15 @@ class InsertPublicationFragmentRefug : Fragment() {
         return UserNumber
 
     }
+
+
+    fun saveSharedPreferencepetIDVISION(petID: String) {
+        var editorSP = AppDatabase.getShareDB().edit()
+        editorSP.putString ("petIDVISION", petID )
+        editorSP.commit()
+    }
+
+
 
 }
 
