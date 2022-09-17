@@ -39,15 +39,13 @@ class InsertPublicationRefugViewModel : ViewModel() {
     }
 
 
-    fun publish(publication: AdoptionPublication, PetID: String) {
+    fun publish(publication: AdoptionPublication, PetID: String, uri: Uri) {
         val pattern = "yyyy-MM-dd"
         val simpleDateFormat = SimpleDateFormat(pattern)
         val now: String = simpleDateFormat.format(Date())
 
         publication.publicationDate_Mascota = now
-        publication.ImageUrl = uploadImageToFirebaseStorage(PetID)
-
-        //uploadJsonToFirebaseStorage(PetID)
+        publication.ImageUrl = uploadImageToFirebaseStorage(PetID,uri)
 
 
         db.collection("mascotaEnAdopcion")
@@ -64,13 +62,14 @@ class InsertPublicationRefugViewModel : ViewModel() {
 
     }
 
-    fun uploadImageToFirebaseStorage(PetID: String) : String {
+    fun uploadImageToFirebaseStorage(PetID: String, uri : Uri) : String {
 
         val fileName = PetID
 
         val storageReference = AppDatabase.getStorageReference()
 
-        var task = storageReference.getReference("lost/images/$fileName-1.jpg").putFile(imageUri.value!!)
+//        var task = storageReference.getReference("lost/images/$fileName-1.jpg").putFile(imageUri.value!!)
+        var task = storageReference.getReference("lost/images/$fileName-1.jpg").putFile(uri)
             .addOnSuccessListener {
                 Log.d("Upload","Upload successfull")
             }

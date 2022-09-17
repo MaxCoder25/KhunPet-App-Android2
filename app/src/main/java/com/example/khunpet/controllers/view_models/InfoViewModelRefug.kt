@@ -106,11 +106,9 @@ class InfoViewModelRefug : ViewModel() {
                       //  adoptionTimeResponse = gson.fromJson(response.body!!.string(), object : TypeToken<MutableList<FlaskResponseRefug?>?>() {}.type)
 
 
-
-
                     var adoptionTimeResponse = response.body?.string()
 
-                    var adoptionTimeResponseDigit = (adoptionTimeResponse?.get(18)).toString()
+                    var adoptionTimeResponseDigit = (adoptionTimeResponse?.get(17)).toString()
 
                    //  var adoptionTimeResponse: FlaskResponseRefug? = gson.fromJson(response.body!!.string(), FlaskResponseRefug::class.java)
 

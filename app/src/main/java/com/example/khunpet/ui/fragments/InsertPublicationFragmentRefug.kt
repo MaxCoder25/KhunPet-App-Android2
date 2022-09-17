@@ -175,10 +175,11 @@ class InsertPublicationFragmentRefug : Fragment() {
 
     private fun buildPublication() {
 
-        if (viewModel.imageUri.value == Uri.EMPTY) {
+       /* if (viewModel.imageUri.value == Uri.EMPTY) {
             Toast.makeText(requireContext(), "Es necesario una imagen", Toast.LENGTH_SHORT).show()
             return
         }
+*/
 
         var Type = 0
 
@@ -481,11 +482,17 @@ class InsertPublicationFragmentRefug : Fragment() {
             Description, Quantity, Fee,State,VideoAmt,PetID,RescuerID,PhotoAmt,AdoptionSpeed,publicationDate_Mascota,ImageUrl, telefono,refugio
                 )
 
-        //viewModel.publish(publication,PetID)
+       // viewModel.publish(publication,PetID)
 
         Toast.makeText(requireContext(), "Publicación exitosa", Toast.LENGTH_SHORT).show()
 
+
+
+
         val intent = Intent (getActivity(), MainActivityVision::class.java)
+        intent.putExtra("PUBLICACTION_SERIAL", publication);
+        intent.putExtra("URIPET", viewModel.imageUri.value.toString())
+
         getActivity()?.startActivity(intent)
 
 

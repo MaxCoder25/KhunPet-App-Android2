@@ -14,7 +14,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
@@ -25,7 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
@@ -33,6 +31,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.khunpet.R;
 import com.example.khunpet.controllers.view_models.InsertPublicationRefugViewModel;
 import com.example.khunpet.googleapis.GetOAuthToken;
+import com.example.khunpet.model.AdoptionPublication;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.AccountPicker;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -62,10 +61,11 @@ import java.util.Locale;
 
 public class MainActivityVision extends AppCompatActivity {
 
-   // private InsertPublicationRefugViewModel viewModel;
+   private InsertPublicationRefugViewModel viewModel;
 
     private final String TAG = "CloudVisionExample";
 
+    private Uri uriGlobal ;
 
     static final int REQUEST_GALLERY_IMAGE = 100;
     static final int REQUEST_CODE_PICK_ACCOUNT = 101;
@@ -78,6 +78,8 @@ public class MainActivityVision extends AppCompatActivity {
     private TextView textResults;
     private Account mAccount;
     private ProgressDialog mProgressDialog;
+
+
 
 
     @Override
@@ -96,16 +98,21 @@ public class MainActivityVision extends AppCompatActivity {
 
        // InsertPublicationRefugViewModel  viewModel = ViewModelProviders.of(this).get(InsertPublicationRefugViewModel.class);
 
-        InsertPublicationRefugViewModel viewModel = new ViewModelProvider(this).get(InsertPublicationRefugViewModel.class);
+         viewModel = new ViewModelProvider(this).get(InsertPublicationRefugViewModel.class);
         //viewModel.uploadJsonToFirebaseStorage();
 
-          selectImageButton2.setOnClickListener(item -> {
 
-                      viewModel.uploadJsonToFirebaseStorage();
+        ActivityCompat.requestPermissions(MainActivityVision.this,
+                new String[]{ Manifest.permission.GET_ACCOUNTS,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                },
+                REQUEST_PERMISSIONS);
 
-          } ) ;
 
 
+        //String valor = getIntent().getStringExtra("URIPET");
+        // performCloudVisionRequest( Uri.parse( valor ) );
 
 
         selectImageButton.setOnClickListener(new View.OnClickListener() {
@@ -120,11 +127,43 @@ public class MainActivityVision extends AppCompatActivity {
                         REQUEST_PERMISSIONS);
 
              //   RequestPermissions();
+
+              /*  try {
+                    Thread.sleep(5 * 1000);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                }
+*/
+
+
+                //subir publiacion
+               // product = intent.getParcelableExtra<Product>("AnyNameOrKey")
+                //AdoptionPublication publication =  getIntent().getParcelableExtra("PUBLICACTION_SERIAL");
+
+               //   viewModel.publish(publication, publication.getPetID(), uriGlobal);
+
+
+                //  viewModel.uploadJsonToFirebaseStorage();
+
+                   //changeToMainActivity();
             }
 
 
         } );
 
+        selectImageButton2.setOnClickListener(item -> {
+
+            AdoptionPublication publication =  getIntent().getParcelableExtra("PUBLICACTION_SERIAL");
+
+            viewModel.publish(publication, publication.getPetID(), uriGlobal);
+
+
+            viewModel.uploadJsonToFirebaseStorage();
+
+           // changeToMainActivity();
+
+
+        } ) ;
 
 
     }
@@ -198,7 +237,7 @@ public class MainActivityVision extends AppCompatActivity {
             performCloudVisionRequest(data.getData());
 
             //podria enviar aqui la imagen de data ? ( es una uri en el metodo perform cloud )
-
+            //viewModel.
 
 
 
@@ -235,11 +274,18 @@ public class MainActivityVision extends AppCompatActivity {
 
             try {
 
+                uriGlobal  = uri ;
+
+
                 Bitmap bitmap = resizeBitmap(
                         MediaStore.Images.Media.getBitmap(getContentResolver(), uri));
                 callCloudVision(bitmap);
 
                 selectedImage.setImageBitmap(bitmap);
+
+
+
+
 
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());
@@ -264,10 +310,21 @@ public class MainActivityVision extends AppCompatActivity {
                     Vision vision = builder.build();
 
                     List<Feature> featureList = new ArrayList<>();
+
                     Feature labelDetection = new Feature();
                     labelDetection.setType("LABEL_DETECTION");
                     labelDetection.setMaxResults(10);
                     featureList.add(labelDetection);
+
+                    Feature imageProperties = new Feature();
+                    imageProperties.setType("IMAGE_PROPERTIES");
+                    imageProperties.setMaxResults(10);
+                    featureList.add(imageProperties);
+
+                    Feature cropHints = new Feature();
+                    cropHints.setType("CROP_HINTS");
+                    cropHints.setMaxResults(10);
+                    featureList.add(cropHints);
 
                     Feature textDetection = new Feature();
                     textDetection.setType("TEXT_DETECTION");
@@ -323,7 +380,9 @@ public class MainActivityVision extends AppCompatActivity {
 
                     FileWriter file = new FileWriter("/storage/1DFA-2608/MyIdea/" + PetID + "-1.json");
                     BufferedWriter output = new BufferedWriter(file);
-                    output.write(jsArray.toString());
+                  String  jsonArrayFinal = jsArray.toString();
+
+                    output.write(jsonArrayFinal.substring(1, (jsonArrayFinal.length() - 1) )  );
 
                      output.close();
 
@@ -335,7 +394,7 @@ public class MainActivityVision extends AppCompatActivity {
 
 
 
-                //viewModel.uploadJsonToFirebaseStorage();
+                viewModel.uploadJsonToFirebaseStorage();
 
 
                 mProgressDialog.dismiss();
@@ -381,6 +440,26 @@ public class MainActivityVision extends AppCompatActivity {
 
         return message.toString();
     }
+
+
+  /*  private String getDetectedProperties(BatchAnnotateImagesResponse response){
+        StringBuilder message = new StringBuilder("");
+        List<EntityAnnotation> texts = response.getResponses().get(0).getImagePropertiesAnnotation();
+
+        if (texts != null) {
+            for (EntityAnnotation text : texts) {
+                message.append(String.format(Locale.getDefault(), "%s: %s",
+                        text.getLocale(), text.getDescription()));
+                message.append("\n");
+            }
+        } else {
+            message.append("nothing\n");
+        }
+
+        return message.toString();
+    }
+    */
+
 
     public Bitmap resizeBitmap(Bitmap bitmap) {
 
@@ -451,6 +530,17 @@ public class MainActivityVision extends AppCompatActivity {
 
         return PetID;
     }
+
+
+
+    private void changeToMainActivity(){
+
+
+        Intent intent = new Intent(this, MainActivityRefug.class);
+        startActivity(intent);
+
+    }
+
 
 
 

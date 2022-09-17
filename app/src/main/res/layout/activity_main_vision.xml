@@ -10,6 +10,16 @@
     android:paddingTop="16dp"
     tools:context=".ui.activities.MainActivityVision">
 
+    <Button
+        android:id="@+id/select_image_button2"
+        android:layout_width="122dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/select_image_button"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="273dp"
+        android:layout_marginBottom="38dp"
+        android:text="Enviar" />
+
     <TextView
         android:id="@+id/selected_image_txt"
         android:layout_width="match_parent"
@@ -47,38 +57,40 @@
 
     <TextView
         android:id="@+id/texts"
-        android:text="Texts:"
-        android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_label_results"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:text="Texts:"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_texts_results"
-        android:text="-"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/texts"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:text="-" />
 
     <Button
         android:id="@+id/select_image_button"
-        android:layout_width="wrap_content"
+        android:layout_width="173dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="17dp"
-        android:layout_marginBottom="96dp"
-        android:text="Choose an Image" />
+        android:layout_marginStart="283dp"
+        android:layout_marginBottom="240dp"
+        android:text="Elige la imagen " />
+    <!--
+        <Button
+            android:id="@+id/select_image_button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="247dp"
+            android:layout_marginBottom="107dp"
+            android:text="Upload Firebase" />
 
-    <Button
-        android:id="@+id/select_image_button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="247dp"
-        android:layout_marginBottom="107dp"
-        android:text="Upload Firebase" />
+            -->
 </RelativeLayout>

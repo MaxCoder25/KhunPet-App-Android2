@@ -89,7 +89,8 @@ class InfoActivityRefug : AppCompatActivity() {
         GlobalScope.launch(Dispatchers.Main){ // launches coroutine in main thread
             updateUi()
 
-            delay(8000L)
+            delay(6000L)
+
             binding.TiempoAdopcion.text = getStringSharedPreference_petAUX()
 
         }
@@ -103,9 +104,6 @@ class InfoActivityRefug : AppCompatActivity() {
            withContext(Dispatchers.Default) {
 
              //  viewModel.publication.observe(this) {
-
-
-
 
                var petID =getStringSharedPreference_petID()
 
@@ -134,7 +132,7 @@ class InfoActivityRefug : AppCompatActivity() {
                        }
                        else -> {
                           // petIDAux = "Faltan archivos de analisis de esta mascota, intente de nuevo"
-                           petIDAux = "..."
+                           petIDAux = "...."
 
                        }
                    }
