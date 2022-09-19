@@ -28,6 +28,7 @@ import com.example.khunpet.R
 import com.example.khunpet.controllers.view_models.InsertPublicationViewModel
 import com.example.khunpet.controllers.view_models.MainActivityViewModel
 import com.example.khunpet.controllers.view_models.MapViewModel
+import com.example.khunpet.databinding.FragmentInsertFoundBinding
 import com.example.khunpet.databinding.FragmentInsertPublicationBinding
 import com.example.khunpet.model.Publication
 import com.example.khunpet.model.Usuario
@@ -51,7 +52,10 @@ class InsertPublicationFragment : Fragment() {
     private val viewModel : InsertPublicationViewModel by activityViewModels()
     private val activityViewModel : MainActivityViewModel by activityViewModels()
     private var _binding: FragmentInsertPublicationBinding? = null
+
+
     private val binding get() = _binding!!
+
 
     private val regex = "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*\$"
     private var pattern: Pattern = Pattern.compile(regex)
@@ -67,6 +71,7 @@ class InsertPublicationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentInsertPublicationBinding.inflate(inflater, container, false)
+
         selectImg = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val uri = it.data?.data!!
@@ -112,6 +117,7 @@ class InsertPublicationFragment : Fragment() {
         binding.abrirMapaButton.setOnClickListener {
             goToMap()
         }
+
 
         viewModel.usuario.observe(viewLifecycleOwner) {
             binding.telefonoEditText.setText(it.numero)

@@ -17,6 +17,8 @@
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpetv3/app/src/main/res/layout/fragment_publications.xml" value="0.13072916666666667" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpetv3/app/src/main/res/layout/item_publication_list.xml" value="0.13072916666666667" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpetv3/app/src/main/res/layout/item_publication_refug.xml" value="0.264" />
+        <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpetv3V2/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.116" />
+        <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpetv3V2/app/src/main/res/drawable/ic_launcher_background.xml" value="0.116" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpetv3V2/app/src/main/res/layout/activity_datos_user.xml" value="0.15443840579710144" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpetv3V2/app/src/main/res/layout/activity_display_map.xml" value="0.1671195652173913" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpetv3V2/app/src/main/res/layout/activity_info.xml" value="0.2" />
@@ -26,8 +28,11 @@
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpetv3V2/app/src/main/res/layout/activity_main_vision.xml" value="0.264" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpetv3V2/app/src/main/res/layout/fragment_found_list.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpetv3V2/app/src/main/res/layout/fragment_found_list_refug.xml" value="0.22083333333333333" />
-        <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpetv3V2/app/src/main/res/layout/fragment_insert_publication.xml" value="0.16" />
+        <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpetv3V2/app/src/main/res/layout/fragment_insert_found.xml" value="0.1" />
+        <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpetv3V2/app/src/main/res/layout/fragment_insert_publication.xml" value="0.2" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpetv3V2/app/src/main/res/layout/fragment_lost_and_found.xml" value="0.1" />
+        <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpetv3V2/app/src/main/res/layout/fragment_map.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpetv3V2/app/src/main/res/layout/fragment_map_found.xml" value="0.18229166666666666" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpetv3V2/app/src/main/res/layout/fragment_publication_refug.xml" value="0.264" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpetv3V2/app/src/main/res/layout/fragment_user.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Khunpetv3V2/app/src/main/res/layout/item_publication_refug.xml" value="0.15260416666666668" />

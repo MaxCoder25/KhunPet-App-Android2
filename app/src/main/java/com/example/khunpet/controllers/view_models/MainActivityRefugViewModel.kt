@@ -5,10 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.khunpet.R
 import com.example.khunpet.model.Usuario
-import com.example.khunpet.ui.fragments.FoundListFragmentRefug
-import com.example.khunpet.ui.fragments.HomeFragmentRefug
-import com.example.khunpet.ui.fragments.InsertFoundFragment
-import com.example.khunpet.ui.fragments.InsertPublicationFragmentRefug
+import com.example.khunpet.ui.fragments.*
 import com.example.khunpet.utils.AppDatabase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -19,6 +16,7 @@ class MainActivityRefugViewModel : ViewModel() {
     private val homeFragmentRefug = HomeFragmentRefug()
     private val insertPublicationFragmentRefug = InsertPublicationFragmentRefug()
     private val insertFoundFragment = InsertFoundFragment()
+    private val mapFragmentFound = MapFragmentFound()
     private val foundFragmentRefug = FoundListFragmentRefug()
 
 
@@ -52,6 +50,11 @@ class MainActivityRefugViewModel : ViewModel() {
             }
             R.id.publications_found_button -> {
                 currentFragment.postValue(foundFragmentRefug)
+                true
+            }
+
+            10 -> {
+                currentFragment.postValue(mapFragmentFound)
                 true
             }
             else -> false

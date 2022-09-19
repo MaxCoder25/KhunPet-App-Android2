@@ -1,16 +1,14 @@
 package com.example.khunpet.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.example.khunpet.R
-import com.example.khunpet.controllers.view_models.InsertPublicationViewModel
-import com.example.khunpet.controllers.view_models.MainActivityViewModel
+import com.example.khunpet.controllers.view_models.InsertFoundViewModel
+import com.example.khunpet.controllers.view_models.MainActivityRefugViewModel
 import com.example.khunpet.controllers.view_models.MapViewModel
 import com.example.khunpet.databinding.FragmentMapBinding
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -18,11 +16,11 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 
-class MapFragment : Fragment(), OnMapReadyCallback {
+class MapFragmentFound : Fragment(), OnMapReadyCallback {
 
     private val viewModel: MapViewModel by activityViewModels()
-    private val activityViewModel : MainActivityViewModel by activityViewModels()
-    private val insertViewModel : InsertPublicationViewModel by activityViewModels()
+    private val activityViewModel : MainActivityRefugViewModel by activityViewModels()
+    private val insertViewModel : InsertFoundViewModel by activityViewModels()
     private var _binding: FragmentMapBinding? = null
     private val binding get() = _binding!!
     private lateinit var mMap: GoogleMap
@@ -42,7 +40,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         binding.salirButton.setOnClickListener {
-            activityViewModel.changeFragment(R.id.publications_button)
+            activityViewModel.changeFragment(R.id.publications_found_insertar_button)
         }
 
         binding.tomarLocacionButton.setOnClickListener {
@@ -50,7 +48,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
             insertViewModel.location.postValue(mMap.cameraPosition.target)
 
-            activityViewModel.changeFragment(R.id.publications_button)
+            activityViewModel.changeFragment(R.id.publications_found_insertar_button)
 
         }
 

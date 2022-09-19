@@ -1,4 +1,7 @@
 <resources>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyD5qcZe-0-dK3TqE6IiYVFfUM0tzBNwFNs</string>
+    <string name="google_maps_key2" templateMergeStrategy="preserve" translatable="false">AIzaSyAVZqV8F_gFm-HuMwfCWByK0ZXFbyf7iKw</string>
+
+
     <string name="map_id">545529aeb28d5516</string>
 </resources>

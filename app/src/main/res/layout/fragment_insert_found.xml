@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:windowSoftInputMode="adjustResize|stateHidden"
-    tools:context=".ui.fragments.InsertPublicationFragment">
+    tools:context=".ui.fragments.InsertFoundFragment">
 
     <ScrollView
         app:layout_constraintTop_toTopOf="parent"
