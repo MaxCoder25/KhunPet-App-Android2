@@ -20,6 +20,9 @@ class InfoViewModelRefug : ViewModel() {
     //private val client = OkHttpClient()
 
 
+    val adoptionPredictionString : MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
 
 
     private val client = OkHttpClient.Builder()
@@ -81,7 +84,7 @@ class InfoViewModelRefug : ViewModel() {
             //.url("http://heroku/predict/$fileName.jpg")
          //127.0.0.1 no funciona es localhost compu no android emulator
 
-            .url("http://10.0.2.2:5000/predict/$petID")
+            .url("http://10.0.2.2:4000/predict/$petID")
 
             .build()
        //  client.newCall(request).execute()
@@ -108,7 +111,7 @@ class InfoViewModelRefug : ViewModel() {
 
                     var adoptionTimeResponse = response.body?.string()
 
-                    var adoptionTimeResponseDigit = (adoptionTimeResponse?.get(17)).toString()
+                    var adoptionTimeResponseDigit = (adoptionTimeResponse?.get(18)).toString()
 
                    //  var adoptionTimeResponse: FlaskResponseRefug? = gson.fromJson(response.body!!.string(), FlaskResponseRefug::class.java)
 
@@ -116,7 +119,9 @@ class InfoViewModelRefug : ViewModel() {
 
                         if (adoptionTimeResponse != null) {
 
-                           saveSharedPreferencepetIDResponse(adoptionTimeResponseDigit)
+                            adoptionPredictionString.postValue( adoptionTimeResponseDigit)
+
+                         //  saveSharedPreferencepetIDResponse(adoptionTimeResponseDigit)
                          //   saveSharedPreferencepetIDResponse(adoptionTimeResponse[0].AdoptionPrediction)
 
                         }
@@ -138,6 +143,11 @@ class InfoViewModelRefug : ViewModel() {
 
 
             }
+
+
+
+
+
 
         })
 

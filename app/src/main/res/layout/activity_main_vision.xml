@@ -10,87 +10,97 @@
     android:paddingTop="16dp"
     tools:context=".ui.activities.MainActivityVision">
 
-    <Button
-        android:id="@+id/select_image_button2"
-        android:layout_width="122dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/select_image_button"
+    <ScrollView
+        android:layout_width="395dp"
+        android:layout_height="715dp"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="273dp"
-        android:layout_marginBottom="38dp"
-        android:text="Enviar" />
-
-    <TextView
-        android:id="@+id/selected_image_txt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:gravity="center"
-        android:text="Selected Image "
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp">
 
-    <ImageView
-        android:id="@+id/selected_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/selected_image_txt"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/labels"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/selected_image"
-        android:layout_marginTop="10dp"
-        android:text="Labels:"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/selected_image_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Seleccione la Imagen "
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tv_label_results"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/labels"
-        android:layout_marginTop="10dp"
-        android:text="-" />
+            <ImageView
+                android:id="@+id/selected_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
 
-    <TextView
-        android:id="@+id/texts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_label_results"
-        android:layout_marginTop="10dp"
-        android:text="Texts:"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/labels"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Labels (Etiquetas):"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tv_texts_results"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/texts"
-        android:layout_marginTop="10dp"
-        android:text="-" />
+            <TextView
+                android:id="@+id/tv_label_results"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="-" />
+<!--
+            <TextView
+                android:id="@+id/texts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:text="Texts:"
+                android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/select_image_button"
-        android:layout_width="173dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="283dp"
-        android:layout_marginBottom="240dp"
-        android:text="Elige la imagen " />
+            <TextView
+                android:id="@+id/tv_texts_results"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="-" />
+-->
+            <Button
+                android:id="@+id/select_image_button2"
+                android:layout_width="156dp"
+                android:layout_height="59dp"
+                android:layout_marginStart="202dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="16dp"
+                android:text="Publicar" />
+        </LinearLayout>
+    </ScrollView>
+
     <!--
         <Button
-            android:id="@+id/select_image_button2"
-            android:layout_width="wrap_content"
+            android:id="@+id/select_image_button"
+            android:layout_width="173dp"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/selected_image"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="247dp"
-            android:layout_marginBottom="107dp"
-            android:text="Upload Firebase" />
+            android:layout_marginStart="283dp"
+            android:layout_marginTop="350dp"
+            android:layout_marginBottom="240dp"
+            android:text="Elige la imagen " />
 
-            -->
+            <Button
+                android:id="@+id/select_image_button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="247dp"
+                android:layout_marginBottom="107dp"
+                android:text="Upload Firebase" />
+
+                -->
 </RelativeLayout>

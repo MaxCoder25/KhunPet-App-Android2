@@ -44,6 +44,41 @@ class InfoActivityRefug : AppCompatActivity() {
         }
 
 
+        viewModel.adoptionPredictionString.observe(this) {
+
+           var  petIDAux=""
+
+            when ( it ) {
+                "0" ->  {
+                    petIDAux = "El mismo día"
+                }
+                "1" -> {
+                    petIDAux = "Entre 1 y 7 días"
+                }
+                "2" -> {
+                    petIDAux = "Entre 8 y 30 días"
+                }
+                "3" -> {
+                    petIDAux = "Entre 31 y 90 días"
+                }
+                "4" -> {
+                    petIDAux = "Más de 100 días"
+                }
+                else -> {
+                    // petIDAux = "Faltan archivos de analisis de esta mascota, intente de nuevo"
+                    petIDAux = "...."
+
+                }
+            }
+
+           // saveSharedPreferencepetAUX(petIDAux)
+
+            binding.TiempoAdopcion.text =petIDAux
+
+
+        }
+
+
         viewModel.loading.observe(this) { bool ->
             if (bool) {
                 binding.progressBar2.visibility = View.VISIBLE
@@ -89,9 +124,7 @@ class InfoActivityRefug : AppCompatActivity() {
         GlobalScope.launch(Dispatchers.Main){ // launches coroutine in main thread
             updateUi()
 
-            delay(6000L)
 
-            binding.TiempoAdopcion.text = getStringSharedPreference_petAUX()
 
         }
 

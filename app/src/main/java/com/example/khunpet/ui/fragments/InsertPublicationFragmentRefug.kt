@@ -123,13 +123,13 @@ class InsertPublicationFragmentRefug : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.imageButton.setOnClickListener {
+      /*  binding.imageButton.setOnClickListener {
             ImagePicker.with(requireActivity())
                 .provider(ImageProvider.BOTH)
                 .crop(224f,224f)
                 .createIntentFromDialog { selectImg.launch(it) }
         }
-
+*/
         binding.publicarButton.setOnClickListener {
             buildPublication()
 
@@ -138,7 +138,7 @@ class InsertPublicationFragmentRefug : Fragment() {
         }
 
         viewModel.imageUri.observe(viewLifecycleOwner) {
-            loadWithPicasso(it)
+          //  loadWithPicasso(it)
         }
 
         viewModel.loading.observe(viewLifecycleOwner) { bool ->
@@ -484,7 +484,7 @@ class InsertPublicationFragmentRefug : Fragment() {
 
        // viewModel.publish(publication,PetID)
 
-        Toast.makeText(requireContext(), "Publicación exitosa", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Datos correctos", Toast.LENGTH_SHORT).show()
 
 
 
@@ -504,18 +504,18 @@ class InsertPublicationFragmentRefug : Fragment() {
         if (uri != Uri.EMPTY) {
             Picasso.get()
                 .load(uri)
-                .fit().into(binding.uploadImageView)
+              //  .fit().into(binding.uploadImageView)
         } else  {
             Picasso.get()
                 .load(R.drawable.place_holder)
-                .fit().into(binding.uploadImageView)
+            //    .fit().into(binding.uploadImageView)
         }
 
     }
 
     private fun clear(){
-        binding.uploadImageView.setImageResource(0)
-        removeImage()
+       // binding.uploadImageView.setImageResource(0)
+      //  removeImage()
         binding.autoCompleteAnimalType.text.clear()
         binding.autoCompleteColorType .text.clear()
         binding.autoCompletebreedType .text.clear()
@@ -539,7 +539,7 @@ class InsertPublicationFragmentRefug : Fragment() {
     private fun removeImage(){
         Picasso.get()
             .load(R.drawable.place_holder)
-            .fit().into(binding.uploadImageView)
+        //    .fit().into(binding.uploadImageView)
     }
 
 

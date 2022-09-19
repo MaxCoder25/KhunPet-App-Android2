@@ -9,7 +9,7 @@
         android:id="@+id/publications_button_refug"
         android:enabled="true"
         android:icon="@drawable/list_icon"
-        android:title="Predecir"/>
+        android:title="Insertar" />
     <item
         android:id="@+id/publications_found_button"
         android:enabled="true"

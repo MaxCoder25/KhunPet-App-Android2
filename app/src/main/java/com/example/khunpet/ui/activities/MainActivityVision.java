@@ -89,12 +89,12 @@ public class MainActivityVision extends AppCompatActivity {
 
         mProgressDialog = new ProgressDialog(this);
 
-        Button selectImageButton = findViewById(R.id.select_image_button);
+      //  Button selectImageButton = findViewById(R.id.select_image_button);
         Button selectImageButton2 = findViewById(R.id.select_image_button2);
 
         selectedImage = findViewById(R.id.selected_image);
         labelResults = findViewById(R.id.tv_label_results);
-        textResults = findViewById(R.id.tv_texts_results);
+     //   textResults = findViewById(R.id.tv_texts_results);
 
        // InsertPublicationRefugViewModel  viewModel = ViewModelProviders.of(this).get(InsertPublicationRefugViewModel.class);
 
@@ -115,7 +115,7 @@ public class MainActivityVision extends AppCompatActivity {
         // performCloudVisionRequest( Uri.parse( valor ) );
 
 
-        selectImageButton.setOnClickListener(new View.OnClickListener() {
+      /*  selectImageButton.setOnClickListener(new View.OnClickListener() {
           //@RequiresApi(api = Build.VERSION_CODES.R)
             @Override
             public void onClick(View v) {
@@ -133,7 +133,7 @@ public class MainActivityVision extends AppCompatActivity {
                 } catch (InterruptedException ie) {
                     Thread.currentThread().interrupt();
                 }
-*/
+
 
 
                 //subir publiacion
@@ -150,6 +150,7 @@ public class MainActivityVision extends AppCompatActivity {
 
 
         } );
+*/
 
         selectImageButton2.setOnClickListener(item -> {
 
@@ -161,7 +162,7 @@ public class MainActivityVision extends AppCompatActivity {
             viewModel.uploadJsonToFirebaseStorage();
 
            // changeToMainActivity();
-
+            Toast.makeText(this, "Publicación exitosa", Toast.LENGTH_SHORT).show();
 
         } ) ;
 
@@ -398,7 +399,7 @@ public class MainActivityVision extends AppCompatActivity {
 
 
                 mProgressDialog.dismiss();
-                textResults.setText(getDetectedTexts(response));
+             //   textResults.setText(getDetectedTexts(response));
                 labelResults.setText(getDetectedLabels(response));
             }
 

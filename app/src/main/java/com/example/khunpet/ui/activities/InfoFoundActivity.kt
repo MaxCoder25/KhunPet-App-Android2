@@ -60,8 +60,17 @@ class InfoFoundActivity : AppCompatActivity() {
         binding.deleteButton.setOnClickListener {
             viewModel.deletePublication()
             Toast.makeText(this, "Publicación borrada", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            //val intent = Intent(this, MainActivity::class.java)
+
+            if (AppDatabase.getUsuarioConectado().tipo=="usuario") {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            } else{
+                val intent2 = Intent(this, MainActivityRefug::class.java)
+                startActivity(intent2)
+            }
+
+
         }
     }
 
@@ -81,14 +90,12 @@ class InfoFoundActivity : AppCompatActivity() {
                     .into(binding.publicacionImv)
                 val guid = viewModel.user.value!!.guid
 
-                if (AppDatabase.getUsuarioConectado().tipo!="usuario") {
-                    binding.deleteButton.visibility = View.INVISIBLE
-                } else {
+
                     if (guid == publication.user) {
                         binding.deleteButton.visibility = View.VISIBLE
                     } else {
                         binding.deleteButton.visibility = View.INVISIBLE
-                    }
+
                 }
 
 

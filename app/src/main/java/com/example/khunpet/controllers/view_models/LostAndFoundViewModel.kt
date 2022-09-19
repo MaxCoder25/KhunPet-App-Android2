@@ -79,7 +79,7 @@ class LostAndFoundViewModel : ViewModel() {
     private fun makeRequest(fileName: String, tipo: Int) {
 
         val request = Request.Builder()
-            .url("http://192.168.100.144:5000/vgg16/$fileName.jpg/$tipo")
+            .url("http://10.0.2.2:5000/vgg16/$fileName.jpg/$tipo")
             .build()
 
 
